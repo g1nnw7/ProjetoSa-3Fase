@@ -8,7 +8,6 @@ import Home from './pages/Home/Home'
 import Quiz from './pages/Quiz/Quiz'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import Login from './pages/Login/Login'
 
 // import App from './App.jsx'
 
@@ -35,7 +34,6 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ToastContainer />
     <RouterProvider router={router} />
     {/* <App /> */}
   </StrictMode>,
