@@ -12,16 +12,16 @@ import Quiz from './pages/Quiz/Quiz'
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />
-  },
-  {
-    path: "/calculador",
-    element: <Calculador />
-  },
-  {
-    path: "/quiz",
-    element: <Quiz />
-  }    
+    element: <Home />}  
+  // },
+  // {
+  //   path: "/calculador",
+  //   element: <Calculador />
+  // },
+  // {
+  //   path: "/quiz",
+  //   element: <Quiz />
+  // }    
 ])
 
 createRoot(document.getElementById('root')).render(
