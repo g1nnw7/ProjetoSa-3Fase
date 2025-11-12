@@ -107,7 +107,7 @@ const RegisterUser = () => {
                     <button
                         type='submit'
                         disabled={isSaving}
-                        className={`w-full p-2 rounded-lg text-white ${isSaving ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'} transition-colors cursor-pointer`}
+                        className={`w-full p-2 rounded-lg text-white ${isSaving ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-800'} transition-colors cursor-pointer`}
                     >
                         {isSaving ? 'Salvando' : 'Criar Usuário'}
                     </button>

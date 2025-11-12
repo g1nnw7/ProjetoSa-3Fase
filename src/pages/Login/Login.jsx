@@ -1,12 +1,12 @@
-import fundo from '../../../public/img/cadastro.jpg'
+import fundo from '../../../public/img/login.jpg'
 import LoginForm from "../../components/LoginForm/LoginForm";
 
 export default function Login(){
     return(
         <>
-         <div className='flex min-h-screen bg-gray-100'>
-                <div className='hidden md:flex w-1/2 bg-gray-200 flex-col items-center justify-center p-8'>
-                    <img src={fundo} alt='clinica médica' className='mb-6' />
+         <div className='flex h-screen bg-gray-100'>
+                <div className='flex h-screen bg-gray-100'>
+                    <img src={fundo} alt='clinica médica'/>
                 </div>
                 <div className='flex w-full md:w-1/2 items-center justify-center p-8'>
                     <LoginForm />

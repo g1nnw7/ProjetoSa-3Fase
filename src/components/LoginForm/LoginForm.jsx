@@ -19,7 +19,7 @@ const LoginForm = () => {
 
     useEffect(() => {
         if (user) {
-            navigate('/dashboard')
+            navigate('/')
         }
     }, [user, navigate])
 
@@ -98,7 +98,7 @@ const LoginForm = () => {
                 </div>
                 <button
                     type="submit"
-                    className="w-full bg-cyan-700 text-white p-2 rounded-lg hover:bg-cyan-800 transition-colors cursor-pointer">Entrar</button>
+                    className="w-full bg-green-500 text-white p-2 rounded-lg hover:bg-green-800 transition-colors cursor-pointer">Entrar</button>
             </form>
 
             <div className="flex justify-between mt-4 text-sm">
