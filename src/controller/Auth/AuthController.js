@@ -17,7 +17,7 @@ class AuthController {
         res
     ) {
         try {
-            const { email, senha, nome, cargo } = req.body;
+            const { email, senha, nome} = req.body;
             // Validação básica
             if (!email || !senha) {
                 return res.status(400).json({ error: "Email e senha são obrigatórios" });
@@ -35,7 +35,7 @@ class AuthController {
             const hashedPassword = await bcrypt.hash(senha, saltRounds);
             // Criar usuário no banco de dados
             const user = await prismaClient.usuario.create({
-                data: { email, senha: hashedPassword, nome: nome || null, cargo: cargo },
+                data: { email, senha: hashedPassword, nome: nome},
                 select: {
                     id: true,
                     email: true,

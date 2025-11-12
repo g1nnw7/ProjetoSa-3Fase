@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 const RegisterUser = () => {
     //campos do formulário
     const [email, setEmail] = useState('')
+    const [nome, setNome] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     // verificador de correspondência de senha
@@ -13,6 +14,7 @@ const RegisterUser = () => {
     //funções de alteração de estado
     const handleEmailChange = (e) => setEmail(e.target.value)
     const handlePasswordChange = (e) => setPassword(e.target.value)
+    const handleNomeChange = (e) => setNome(e.target.value)
     const handleConfirmPasswordChange = (e) => setConfirmPassword(e.target.value)
 
     //validação dos campos de senha
@@ -23,6 +25,7 @@ const RegisterUser = () => {
     const resetForm = () => {
         setEmail('')
         setPassword('')
+        setNome('')
         setConfirmPassword('')
         setIsPasswordMatch(true)
     }
@@ -38,7 +41,11 @@ const RegisterUser = () => {
         setIsSaving(true)
 
         try {
-            await axios.post('http://localhost:3000/users', { email, password })
+            await axios.post('http://localhost:3000/auth/register', { 
+                nome: nome,
+                email: email, 
+                senha: password
+            })
             setIsSaving(false)
             resetForm()
             toast.success("Usuário criado com sucesso!", {
@@ -59,9 +66,20 @@ const RegisterUser = () => {
 
 
     return (
-        <div className='w-full max-w-md p-6 bg-white rounded-xl shadow-lg'>
+        <div className='w-full max-w-md p-6 rounded-xl '>
             <h2 className='text-2xl font-bold mb-6 text-center'>Criar Usuário</h2>
             <form onSubmit={handleSubmit} className='space-y-4'>
+                <div>
+                    <label htmlFor='nomeRegisterUser' className='block text-sm font-medium mb-1'>Nome</label>
+                    <input
+                        type='text'
+                        id='nomeRegisterUser'
+                        value={nome}
+                        onChange={handleNomeChange}
+                        required
+                        className='w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+                    />
+                </div>
                 <div>
                     <label htmlFor='emailRegisterUser' className='block text-sm font-medium mb-1'>Email</label>
                     <input
@@ -107,7 +125,7 @@ const RegisterUser = () => {
                     <button
                         type='submit'
                         disabled={isSaving}
-                        className={`w-full p-2 rounded-lg text-white ${isSaving ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-800'} transition-colors cursor-pointer`}
+                        className={`w-full p-2 rounded-lg text-white ${isSaving ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-800'} transition-colors cursor-pointer`}
                     >
                         {isSaving ? 'Salvando' : 'Criar Usuário'}
                     </button>
