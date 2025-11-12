@@ -8,13 +8,20 @@ import Home from './pages/Home/Home'
 import Quiz from './pages/Quiz/Quiz'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Login from './pages/Login/Login'
 
 // import App from './App.jsx'
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />}  
+    element: <Home />
+  },
+  {
+    path: "/login",
+    element: <Login />
+  }  
+
   // },
   // {
   //   path: "/calculador",
