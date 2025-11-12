@@ -1,42 +1,88 @@
-import React, { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
 const Footer = () => {
-  const ref = useRef(null); // Referência ao elemento Footer
-  const isInView = useInView(ref, { once: true }); // Detecta visibilidade (uma vez)
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
 
   return (
     <motion.footer
-      className="footer"
       ref={ref}
-      initial={{ opacity: 0, y: 100 }} // Começa invisível e 50px abaixo
-      animate={isInView ? { opacity: 1, y: 0 } : {}} // Anima só quando visível
-      transition={{ duration: 1.2 }} // Duração da animação
+      initial={{ opacity: 0, y: 100 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 1.2 }}
+      className="bg-[#1e1e1e] text-white py-5 font-['Poppins']"
     >
-      <div className="footer-content">
-        <div className="footer-section">
-          <h3>Sobre</h3>
-          <ul>
-            <li><a href="#nossa-historia">Nossa História</a></li>
-            <li><a href="#missao">Missão</a></li>
-            <li><a href="#contato">Contato</a></li>
+      {/* Conteúdo principal */}
+      <div className="max-w-[1200px] mx-auto flex flex-wrap justify-around px-5">
+        {/* Seção Sobre */}
+        <div className="my-4">
+          <h3 className="text-base mb-2 font-semibold">Sobre</h3>
+          <ul className="list-none p-0">
+            <li className="my-2">
+              <a
+                href="#nossa-historia"
+                className="text-sm text-white no-underline hover:text-[#6cc24a] hover:underline"
+              >
+                Nossa História
+              </a>
+            </li>
+            <li className="my-2">
+              <a
+                href="#missao"
+                className="text-sm text-white no-underline hover:text-[#6cc24a] hover:underline"
+              >
+                Missão
+              </a>
+            </li>
+            <li className="my-2">
+              <a
+                href="#contato"
+                className="text-sm text-white no-underline hover:text-[#6cc24a] hover:underline"
+              >
+                Contato
+              </a>
+            </li>
           </ul>
         </div>
-        <div className="footer-section">
-          <h3>Contato</h3>
-          <p>Telefone: (48) 99974-4446</p>
-          <p>Email: nicolasclima00@gmail.com</p>
+
+        {/* Seção Contato */}
+        <div className="my-4">
+          <h3 className="text-base mb-2 font-semibold">Contato</h3>
+          <p className="text-sm my-1">Telefone: (48) 99974-4446</p>
+          <p className="text-sm my-1">Email: nicolasclima00@gmail.com</p>
         </div>
-        <div className="footer-section social-links">
-          <h3>Siga-nos</h3>
-          <a href="#facebook">Facebook</a>
-          <a href="#instagram">Instagram</a>
-          <a href="#twitter">Twitter</a>
+
+        {/* Seção Redes Sociais */}
+        <div className="my-4">
+          <h3 className="text-base mb-2 font-semibold">Siga-nos</h3>
+          <div className="flex space-x-4">
+            <a
+              href="#facebook"
+              className="text-white text-sm hover:text-[#6cc24a]"
+            >
+              Facebook
+            </a>
+            <a
+              href="#instagram"
+              className="text-white text-sm hover:text-[#6cc24a]"
+            >
+              Instagram
+            </a>
+            <a
+              href="#twitter"
+              className="text-white text-sm hover:text-[#6cc24a]"
+            >
+              Twitter
+            </a>
+          </div>
         </div>
       </div>
-      <div className="footer-bottom">
-        <p>© 2025 NutriFit. Todos os direitos reservados.</p>
+
+      {/* Rodapé inferior */}
+      <div className="mt-5 text-xs border-t border-[#333] pt-3 text-center">
+        © 2025 <span className="font-semibold">NutriFit</span>. Todos os direitos
+        reservados.
       </div>
     </motion.footer>
   );
