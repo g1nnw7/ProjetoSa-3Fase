@@ -49,7 +49,7 @@ const Section = ({
         animate={isInView ? { opacity: 1, x: 0 } : {}}
         transition={{ duration: 1.2, delay: 0.2 }}
       >
-        <h2 className="text-[3rem] mb-6 text-[#0c7403] font-[Poppins]">
+        <h2 className="text-[3rem] mb-6 text-[#0c7403] font-Poppins">
           {title}
         </h2>
         <p className="text-lg mb-10 text-[#333] leading-relaxed">

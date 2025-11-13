@@ -2,11 +2,13 @@ import React from 'react'
 import Hero from '../../components/Hero/Hero'
 import Section from '../../components/Section/Section'
 import Footer from '../../components/Footer/Footer'
+import Header from '../../components/Header/Header'
 
 
 function Home() {
   return (
     <div>
+      <Header/>
       <Hero />
       <Section
         title="Plano de Dieta Personalizado"
