@@ -25,13 +25,13 @@ function Header() {
           <>
             <button
               onClick={() => navigate('/login')}
-              className="font-Poppins bg-[#FEFEFC]  hover:bg-green-600/40  border-none px-4 py-2 text-[14px] font-[500] font-[Poppins] rounded-[6px] cursor-pointer transition-all duration-300 ease-in-out"
+              className=" font-Poppins bg-[#FEFEFC]  hover:bg-green-600/40  border-none px-4 py-2 text-[14px] font-[500] font-[Poppins] rounded-[6px] cursor-pointer transition-all duration-300 ease-in-out"
             >
               Login
             </button>
             <button
               onClick={() => navigate('/cadastro')}
-              className="font-Poppins bg-[#FEFEFC]  hover:bg-green-600/40  border-none px-4 py-2 text-[14px] font-[500] font-[Poppins] rounded-[6px] cursor-pointer transition-all duration-300 ease-in-out"
+              className=" font-Poppins bg-[#FEFEFC]  hover:bg-green-600/40  border-none px-4 py-2 text-[14px] font-[500] font-[Poppins] rounded-[6px] cursor-pointer transition-all duration-300 ease-in-out"
             >
               Cadastro
             </button>

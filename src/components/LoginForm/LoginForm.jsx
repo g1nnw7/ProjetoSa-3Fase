@@ -10,13 +10,9 @@ const LoginForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    // contexto de autenticação
     const { login, user } = useAuth();
-
-    // rotas com React Router
     const navigate = useNavigate();
 
-    // controle do modal
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -25,7 +21,6 @@ const LoginForm = () => {
         }
     }, [user, navigate]);
 
-    // função de validação do login
     const handleLogin = async (e) => {
         e.preventDefault();
 
@@ -47,6 +42,7 @@ const LoginForm = () => {
 
             const { user, accessToken, refreshToken } = response.data;
 
+            localStorage.setItem("usuarioLogado", JSON.stringify(user))
             localStorage.setItem("accessToken", accessToken);
             localStorage.setItem("refreshToken", refreshToken);
 
@@ -76,60 +72,79 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="max-w-md mx-auto mt-10 bg-white p-8 rounded-xl shadow-lg">
-            <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+            <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-sm">
 
-            <form onSubmit={handleLogin} className="space-y-4">
-                <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-1">
-                        Email:
-                    </label>
-                    <input
-                        type="email"
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                {/* Logo */}
+                {/* <a href="/" className="flex flex-col items-center mb-6">
+                    <img 
+                        src="/img/logo.png" 
+                        alt="Logo" 
+                        className="h-12 w-auto  block mx-auto"
                     />
-                </div>
+                </a> */}
+                    <h1 className="flex flex-col text-2xl font-bold text-gray-800 items-center m-5">Login</h1>
 
-                <div>
-                    <label htmlFor="password" className="block text-sm font-medium mb-1">
-                        Senha:
-                    </label>
-                    <input
-                        type="password"
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        minLength={8}
-                        className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                </div>
+                <form onSubmit={handleLogin} className="space-y-4">
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                            Email:
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                       focus:outline-none focus:ring-2 focus:ring-green-500"
+                        />
+                    </div>
 
-                <button
-                    type="submit"
-                    className="w-full bg-green-600 text-white p-2 rounded-lg hover:bg-green-800 transition-colors cursor-pointer"
-                >
-                    Entrar
-                </button>
-            </form>
+                    <div>
+                        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                            Senha:
+                        </label>
+                        <input
+                            type="password"
+                            id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            minLength={8}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                       focus:outline-none focus:ring-2 focus:ring-green-500"
+                        />
+                    </div>
 
-            <div className="flex justify-between mt-4 text-sm">
-                <button className="cursor-pointer">Esqueceu sua senha?</button>
-                <button
-                    className="cursor-pointer"
-                    onClick={() => setIsModalOpen(true)}
-                >
-                    Criar conta
-                </button>
+                    <button
+                        type="submit"
+                        className="w-full bg-green-600 hover:bg-green-700 
+                                   text-white font-semibold py-2 rounded-lg shadow transition"
+                    >
+                        Entrar
+                    </button>
+                </form>
+
+                <p className="text-center text-sm text-gray-600 mt-4">
+                    Esqueceu sua senha?{" "}
+                    <button className="text-green-600 hover:underline font-medium cursor-pointer">
+                        Recuperar
+                    </button>
+                    <br />
+                    Não tem conta?{" "}
+                    <button
+                        className="text-green-600 hover:underline font-medium cursor-pointer"
+                        onClick={() => setIsModalOpen(true)}
+                    >
+                        Criar conta
+                    </button>
+                </p>
+
+                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                    <RegisterUser />
+                </Modal>
             </div>
-
-            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                <RegisterUser />
-            </Modal>
         </div>
     );
 };

@@ -1,15 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Hero from '../../components/Hero/Hero'
 import Section from '../../components/Section/Section'
 import Footer from '../../components/Footer/Footer'
 import Header from '../../components/Header/Header'
-
+import Modal from '../../components/Modal/Modal'
+import RegisterUser from '../../components/RegisterUser/RegisterUser'
 
 function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div>
-      <Header/>
+
+      {/* PASSANDO A FUNÇÃO PARA O HEADER */}
+      <Header openRegisterModal={() => setIsModalOpen(true)} />
+
       <Hero />
+
+      {/* MODAL */}
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <RegisterUser />
+      </Modal>
+
       <Section
         title="Plano de Dieta Personalizado"
         description="Faça o quiz e nós montamos o seu plano alimentar!"
@@ -31,7 +43,7 @@ function Home() {
         buttonText="Comece Agora"
         imageSrc="/img/acad.jpg"
         url="/quiz"
-        />
+      />
       <Section
         title="Nossos produtos"
         description="Nossos produtos são desenvolvidos com tecnologia e respeito ao meio ambiente. Qualidade e design que inspiram."
@@ -40,9 +52,9 @@ function Home() {
         url="/produtos"
         rowReverse
       />
+      
       <Footer />
     </div>
-
   )
 }
 

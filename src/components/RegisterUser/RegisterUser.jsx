@@ -1,26 +1,25 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const RegisterUser = () => {
-    //campos do formulário
+    const navigate = useNavigate();
     const [email, setEmail] = useState('')
     const [nome, setNome] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    // verificador de correspondência de senha
+
     const [isPasswordMatch, setIsPasswordMatch] = useState(true)
     const [isSaving, setIsSaving] = useState(false)
-    //funções de alteração de estado
+
     const handleEmailChange = (e) => setEmail(e.target.value)
     const handlePasswordChange = (e) => setPassword(e.target.value)
     const handleNomeChange = (e) => setNome(e.target.value)
     const handleConfirmPasswordChange = (e) => setConfirmPassword(e.target.value)
 
-    //validação dos campos de senha
-    const isPasswordValid = () => password.length >= 8 && password === confirmPassword
-
-    //função para limpar o formulário
+    const isPasswordValid = () =>
+        password.length >= 8 && password === confirmPassword
 
     const resetForm = () => {
         setEmail('')
@@ -41,21 +40,25 @@ const RegisterUser = () => {
         setIsSaving(true)
 
         try {
-            await axios.post('http://localhost:3000/auth/register', { 
+            await axios.post('http://localhost:3000/auth/register', {
                 nome: nome,
-                email: email, 
+                email: email,
                 senha: password
             })
+
             setIsSaving(false)
             resetForm()
+
             toast.success("Usuário criado com sucesso!", {
                 autoClose: 3000,
                 hideProgressBar: true
             })
 
+            setTimeout(() => navigate("/login"), 2000)
+
         } catch (error) {
             console.error("Erro ao criar o usuário", error)
-            toast.error('Erro ao criar o usuário!', {
+            toast.error("Erro ao criar o usuário!", {
                 autoClose: 3000,
                 hideProgressBar: true
             })
@@ -63,73 +66,102 @@ const RegisterUser = () => {
         }
     }
 
-
-
     return (
-        <div className='w-full max-w-md p-6 rounded-xl '>
-            <h2 className='text-2xl font-bold mb-6 text-center'>Criar Usuário</h2>
-            <form onSubmit={handleSubmit} className='space-y-4'>
+        <div className="w-full max-w-sm mx-auto">
+            <div className="text-center mb-6">
+                <h2 className="text-2xl font-bold text-gray-800">
+                    Criar Usuário
+                </h2>
+                <p className="text-gray-500 text-sm">
+                    Preencha os dados abaixo para criar sua conta
+                </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Nome */}
                 <div>
-                    <label htmlFor='nomeRegisterUser' className='block text-sm font-medium mb-1'>Nome</label>
+                    <label htmlFor="nomeRegisterUser" className="text-sm font-medium text-gray-700">
+                        Nome
+                    </label>
                     <input
-                        type='text'
-                        id='nomeRegisterUser'
+                        type="text"
+                        id="nomeRegisterUser"
                         value={nome}
                         onChange={handleNomeChange}
                         required
-                        className='w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
-                    />
-                </div>
-                <div>
-                    <label htmlFor='emailRegisterUser' className='block text-sm font-medium mb-1'>Email</label>
-                    <input
-                        type='email'
-                        id='emailRegisterUser'
-                        value={email}
-                        onChange={handleEmailChange}
-                        required
-                        className='w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                   focus:outline-none focus:ring-2 focus:ring-green-500"
                     />
                 </div>
 
+                {/* Email */}
                 <div>
-                    <label htmlFor='passwordRegisterUser' className='block text-sm font-medium mb-1'>Senha</label>
+                    <label htmlFor="emailRegisterUser" className="text-sm font-medium text-gray-700">
+                        Email
+                    </label>
                     <input
-                        type='password'
-                        id='passwordRegisterUser'
+                        type="email"
+                        id="emailRegisterUser"
+                        value={email}
+                        onChange={handleEmailChange}
+                        required
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                   focus:outline-none focus:ring-2 focus:ring-green-500"
+                    />
+                </div>
+
+                {/* Senha */}
+                <div>
+                    <label htmlFor="passwordRegisterUser" className="text-sm font-medium text-gray-700">
+                        Senha
+                    </label>
+                    <input
+                        type="password"
+                        id="passwordRegisterUser"
                         value={password}
                         onChange={handlePasswordChange}
                         required
                         minLength={8}
-                        className='w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                   focus:outline-none focus:ring-2 focus:ring-green-500"
                     />
                 </div>
 
+                {/* Confirmar senha */}
                 <div>
-                    <label htmlFor='confirmPassword' className='block text-sm font-medium mb-1'>Confirmar senha</label>
+                    <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">
+                        Confirmar senha
+                    </label>
                     <input
-                        type='password'
-                        id='confirmPassword'
+                        type="password"
+                        id="confirmPassword"
                         value={confirmPassword}
                         onChange={handleConfirmPasswordChange}
                         required
                         minLength={8}
-                        className='w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                   focus:outline-none focus:ring-2 focus:ring-green-500"
                     />
+
                     {!isPasswordMatch && (
-                        <p className='text-red-500 text-sm mt-1'>As senhas não correspondem</p>
+                        <p className="text-red-500 text-sm mt-1">
+                            As senhas não correspondem.
+                        </p>
                     )}
                 </div>
 
-                <div className='flex justify-center'>
-                    <button
-                        type='submit'
-                        disabled={isSaving}
-                        className={`w-full p-2 rounded-lg text-white ${isSaving ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-800'} transition-colors cursor-pointer`}
-                    >
-                        {isSaving ? 'Salvando' : 'Criar Usuário'}
-                    </button>
-                </div>
+                {/* Botão */}
+                <button
+                    type="submit"
+                    disabled={isSaving}
+                    className={`w-full py-2 mt-2 text-white font-semibold rounded-lg shadow transition 
+                                ${isSaving
+                            ? "bg-gray-400 cursor-not-allowed"
+                            : "bg-green-600 hover:bg-green-700"
+                        }`}
+                >
+                    {isSaving ? "Salvando..." : "Criar Usuário"}
+                </button>
             </form>
         </div>
     )
