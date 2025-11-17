@@ -58,7 +58,6 @@ function cartReducer(state, action) {
 export function CartProvider({ children }) {
   const [state, dispatch] = useReducer(cartReducer, initialState);
 
-  // Carregar carrinho do localStorage ao iniciar
   useEffect(() => {
     const savedCart = localStorage.getItem('nutrition_cart');
     if (savedCart) {

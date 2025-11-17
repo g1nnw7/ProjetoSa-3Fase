@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-
-// Caminhos de importação (sem .jsx, que é o mais comum)
 import { useCart } from '../../contexts/CartContext'; 
 import CartSidebar from '../Cart/CartSidebar';     
 import { useAuth } from '../../contexts/AuthContext'; 
 
-// --- Ícones ---
 function ShoppingBagIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -31,7 +28,6 @@ function LogoutIcon() {
   ); 
 }
 
-// --- Fim dos Ícones ---
 
 
 function Header({ openRegisterModal }) {
@@ -108,14 +104,12 @@ function Header({ openRegisterModal }) {
           >
             <ShoppingBagIcon />
             {totalItems > 0 && (
-              // --- A MUDANÇA ESTÁ AQUI ---
+
               <span 
                 className="absolute -top-1 -right-1 grid h-5 w-5 place-items-center 
                            rounded-full bg-red-600 text-xs font-bold text-white"
               >
-              {/* Removido: flex items-center justify-center
-                Adicionado: grid place-items-center 
-              */}
+
                 {totalItems}
               </span>
             )}

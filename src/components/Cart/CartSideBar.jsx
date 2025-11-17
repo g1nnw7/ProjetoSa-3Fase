@@ -1,7 +1,6 @@
 import React from 'react';
-// --- CORREÇÃO: Removido ".jsx" do final dos caminhos ---
 import { useCart } from '../../contexts/CartContext';
-import CartItem from './CartItem'; // O sub-componente do item
+import CartItem from './CartItem'; 
 
 
 function XMarkIcon() {
@@ -12,7 +11,7 @@ function XMarkIcon() {
   );
 }
 
-// Ícone de Carrinho Vazio
+
 function EmptyCartIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-24 h-24 text-gray-300">

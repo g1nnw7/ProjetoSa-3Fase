@@ -1,12 +1,10 @@
 import React from 'react';
-// Adicionando extensões .jsx por precaução
 import ProductCard from './ProductCard.jsx';
 import LoadingSkeleton from '../Skeleton/LoadingSkeleton.jsx';
 
-// 1. Aceita a nova prop 'onProductClick'
+
 export default function ProductGrid({ products, loading, onProductClick }) {
   if (loading) {
-    // Mostra 9 "esqueletos" enquanto carrega
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {Array.from({ length: 9 }).map((_, index) => (
@@ -28,7 +26,6 @@ export default function ProductGrid({ products, loading, onProductClick }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 cursor-pointer">
       {products.map((product) => (
-        // 2. Passa a prop para o Card
         <ProductCard 
           key={product.id} 
           product={product} 

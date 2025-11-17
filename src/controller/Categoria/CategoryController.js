@@ -2,7 +2,7 @@ import { prismaClient } from "../../../prisma/prisma.js";
 
 class CategoryController {
   
-  // GET /categories
+
   async getAllCategories(req, res) {
     try {
       const categories = await prismaClient.category.findMany({
@@ -19,7 +19,6 @@ class CategoryController {
     }
   }
 
-  // (No futuro, você pode adicionar create, update, delete aqui para admin)
 }
 
 export const categoryController = new CategoryController();

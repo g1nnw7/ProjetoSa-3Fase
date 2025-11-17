@@ -79,7 +79,7 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Rodapé inferior */}
+
       <div className="mt-5 text-xs border-t border-[#333] pt-3 text-center">
         © 2025 <span className="font-semibold">NutriFit</span>. Todos os direitos
         reservados.

@@ -11,7 +11,7 @@ const Modal = ({ isOpen, onClose, children }) => {
                 >
                     x
                 </button>
-                {/* conteudo do modal */}
+
                 {children}
 
             </div>

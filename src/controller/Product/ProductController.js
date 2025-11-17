@@ -2,14 +2,7 @@ import { prismaClient } from "../../../prisma/prisma.js";
 
 class ProductController {
 
-  /**
-   * GET /products
-   * Rota principal da loja.
-   * Aceita query params:
-   * - ?category=slug-da-categoria
-   * - ?search=termo-de-busca
-   * - ?sort=price_asc | price_desc
-   */
+
   async getAllProducts(req, res) {
     try {
       const { category, search, sort } = req.query;
@@ -36,7 +29,6 @@ class ProductController {
       } else if (sort === 'price_desc') {
         orderBy = { preco: 'desc' };
       } else {
-        // Ordenação padrão (ex: por nome)
         orderBy = { nome: 'asc' };
       }
 
@@ -44,7 +36,6 @@ class ProductController {
         where,
         orderBy,
         include: {
-          // Inclui os dados da categoria junto com o produto
           category: {
             select: {
               nome: true,
@@ -62,7 +53,6 @@ class ProductController {
     }
   }
 
-  // (No futuro, você pode adicionar create, update, delete aqui para admin)
 }
 
 export const productController = new ProductController();

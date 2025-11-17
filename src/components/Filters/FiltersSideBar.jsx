@@ -6,7 +6,7 @@ export default function FiltersSidebar({
   onCategoryChange 
 }) {
   
-  // Estilos dos botões
+
   const baseStyle = "w-full text-left p-3 rounded-lg transition-colors duration-200 text-gray-700";
   const activeStyle = "bg-green-100 text-green-700 font-semibold";
   const inactiveStyle = "hover:bg-gray-100";
