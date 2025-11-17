@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node --watch src/server.js",
+    "prisma:seed": "node prisma/seed.js",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",

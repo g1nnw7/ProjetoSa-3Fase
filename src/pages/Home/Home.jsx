@@ -12,12 +12,10 @@ function Home() {
   return (
     <div>
 
-      {/* PASSANDO A FUNÇÃO PARA O HEADER */}
       <Header openRegisterModal={() => setIsModalOpen(true)} />
 
       <Hero />
 
-      {/* MODAL */}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <RegisterUser />
       </Modal>
@@ -49,7 +47,7 @@ function Home() {
         description="Nossos produtos são desenvolvidos com tecnologia e respeito ao meio ambiente. Qualidade e design que inspiram."
         buttonText="Ver produtos"
         imageSrc="/img/whey.png"
-        url="/produtos"
+        url="/loja"
         rowReverse
       />
       

@@ -30,3 +30,36 @@ model Token {
 
   @@map("token")
 }
+model Category {
+  id        String    @id @default(cuid())
+  nome      String    @unique // ex: "Suplementos", "Snacks Saudáveis", "Orgânicos"
+  slug      String    @unique // ex: "suplementos", "snacks-saudaveis"
+  products  Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id            String    @id @default(cuid())
+  nome          String
+  slug          String    @unique
+  descricao     String    @db.Text
+  preco         Float
+  imageUrl      String    // URL da imagem do produto
+  estoque       Int       @default(0)
+  
+  // Relação com Categoria
+  categoryId String
+  category   Category  @relation(fields: [categoryId], references: [id])
+  
+  // Campos específicos de Nutrição (sugestão)
+  calorias      Int?     // Calorias
+  proteinas     Float?   // Proteínas (g)
+  carboidratos  Float?   // Carboidratos (g)
+  gorduras      Float?   // Gorduras (g)
+  isGlutenFree  Boolean  @default(false)
+  isVegano      Boolean  @default(false)
+  isLactoseFree Boolean  @default(false)
+
+  @@map("products")
+}
