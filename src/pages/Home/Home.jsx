@@ -34,7 +34,7 @@ function Home() {
         title="Nossos produtos"
         description="Nossos produtos são desenvolvidos com tecnologia e respeito ao meio ambiente. Qualidade e design que inspiram."
         buttonText="Ver produtos"
-        imageSrc="/img/whey.png"
+        imageSrc="/img/pratileira.png"
         url="/loja"
         rowReverse
       />

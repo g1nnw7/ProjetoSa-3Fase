@@ -1,31 +1,37 @@
-
 import { createContext, useContext, useState, useEffect } from 'react'
 
 const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState("")
 
-    // se ja tiver email no localStorage, mantém login
+    const [user, setUser] = useState(null)
 
     useEffect(() => {
-        const savedEmail = localStorage.getItem("email")
-        if (savedEmail) {
-            setUser({ email: savedEmail })
+        const savedUser = localStorage.getItem("usuarioLogado");
+        if (savedUser) {
+            try {
+
+                setUser(JSON.parse(savedUser)); 
+            } catch (e) {
+                console.error("Erro ao parsear usuário do localStorage", e);
+                localStorage.removeItem("usuarioLogado");
+            }
         }
     }, [])
 
-    const login = (email) => {
-        localStorage.setItem("email", email)
-        setUser({ email })
+
+    const login = (userData) => {
+        localStorage.setItem("usuarioLogado", JSON.stringify(userData));
+        setUser(userData); 
     }
+
 
     const logout = () => {
-        localStorage.removeItem("email")
-        setUser("")
+        localStorage.removeItem("usuarioLogado");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        setUser(null);
     }
-
-
 
     return (
         <AuthContext.Provider value={{ user, login, logout }}>

@@ -4,40 +4,39 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css' 
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
-import { AuthProvider } from '../src/contexts/AuthContext.jsx' 
-import { CartProvider } from '../src/contexts/CartContext.jsx'
-import Layout from './pages/Layout/Layout.jsx'; 
-import Home from './pages/Home/Home.jsx'
-import Login from './pages/Login/Login.jsx'
-import ShopPage from './pages/Shop/ShopPage.jsx'
+import { AuthProvider } from './contexts/AuthContext'
+import { CartProvider } from './contexts/CartContext'
+import Layout from '../src/pages/Layout/Layout'; 
+import Home from '../src/pages/Home/Home'
+import Login from '../src/pages//Login/Login'
+import ShopPage from '../src/pages/Shop/ShopPage'
 
 const router = createBrowserRouter([
   {
 
     path: "/",
     element: <Layout />, 
-
+    
     children: [
       {
-        path: "/",
+        path: "/", 
         element: <Home />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
       },
       {
         path: "/loja",
         element: <ShopPage />,
       },
       // {
-      //   path: "/quiz",
-      //   element: <Quiz />
+      //   path: "/dashboard", 
+      //   element: <Dashboard />,
       // },
-      //
     ]
+  },
+  {
+    path: "/login",
+    element: <Login />,
   }
+
 ]);
 
 createRoot(document.getElementById('root')).render(
