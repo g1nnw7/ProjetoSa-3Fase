@@ -154,7 +154,7 @@ const RegisterUser = () => {
                 <button
                     type="submit"
                     disabled={isSaving}
-                    className={`w-full py-2 mt-2 text-white font-semibold rounded-lg shadow transition 
+                    className={`w-full py-2 mt-2 text-white font-semibold rounded-lg shadow transition cursor-pointer 
                                 ${isSaving
                             ? "bg-gray-400 cursor-not-allowed"
                             : "bg-green-600 hover:bg-green-700"
