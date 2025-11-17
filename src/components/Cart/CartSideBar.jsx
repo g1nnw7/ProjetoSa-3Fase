@@ -79,7 +79,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                 onClick={handleCheckout}
                 className="w-full py-3 px-4 rounded-lg bg-green-600 text-white 
                            font-semibold text-lg hover:bg-green-700 transition-colors
-                           focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+                           focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 cursor-pointer"
               >
                 Finalizar Compra
               </button>

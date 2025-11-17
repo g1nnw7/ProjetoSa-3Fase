@@ -5,7 +5,6 @@ import ProductGrid from '../../components/Product/ProductGrid';
 import SearchBar from '../../components/Search/SearchBar';
 import Modal from '../../components/Modal/Modal'; 
 import ProductDetails from '../../components/Product/ProductDetail';
-import Header from '../../components/Header/Header';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -97,7 +96,6 @@ export default function ShopPage() {
   return (
 
     <div className="bg-gray-50 min-h-screen">
-      <Header/>
       <div className="container mx-auto max-w-7xl px-4 py-8 md:py-12">
         
         {/* Título */}

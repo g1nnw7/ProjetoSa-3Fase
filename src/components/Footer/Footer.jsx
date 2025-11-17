@@ -49,8 +49,8 @@ const Footer = () => {
         {/* Seção Contato */}
         <div className="my-4">
           <h3 className="text-base mb-2 font-semibold">Contato</h3>
-          <p className="text-sm my-1">Telefone: (48) 99974-4446</p>
-          <p className="text-sm my-1">Email: nicolasclima00@gmail.com</p>
+          <p className="text-sm my-1">Telefone: (48) 99902-2880</p>
+          <p className="text-sm my-1">Email: nutrifit@gmail.com</p>
         </div>
 
         {/* Seção Redes Sociais */}

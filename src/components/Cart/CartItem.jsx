@@ -1,8 +1,6 @@
 import React from 'react';
-// --- CORREÇÃO: Removido ".jsx" do final do caminho ---
 import { useCart } from '../../contexts/CartContext';
 
-// Ícone da Lixeira
 function TrashIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -29,7 +27,7 @@ export default function CartItem({ item }) {
     if (item.quantity > 1) {
       updateQuantity(item.id, item.quantity - 1);
     } else {
-      removeFromCart(item.id); // Remove se a quantidade for 1
+      removeFromCart(item.id); 
     }
   };
 
@@ -47,11 +45,10 @@ export default function CartItem({ item }) {
           R$ {item.preco.toFixed(2).replace('.', ',')}
         </p>
 
-        {/* Controles de Quantidade */}
         <div className="flex items-center mt-2">
           <button 
             onClick={handleDecrement}
-            className="px-2 py-1 border rounded-l-md hover:bg-gray-100"
+            className="px-2 py-1 border rounded-l-md hover:bg-gray-100 cursor-pointer"
           > - </button>
           <input
             type="number"
@@ -61,7 +58,7 @@ export default function CartItem({ item }) {
           />
           <button 
             onClick={handleIncrement}
-            className="px-2 py-1 border rounded-r-md hover:bg-gray-100"
+            className="px-2 py-1 border rounded-r-md hover:bg-gray-100 cursor-pointer"
           > + </button>
         </div>
       </div>
@@ -72,7 +69,7 @@ export default function CartItem({ item }) {
         </span>
         <button 
           onClick={() => removeFromCart(item.id)}
-          className="text-red-500 hover:text-red-700"
+          className="text-red-500 hover:text-red-700 cursor-pointer"
         >
           <TrashIcon />
         </button>
