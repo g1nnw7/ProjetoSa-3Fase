@@ -19,7 +19,7 @@ function DashboardCard({ icon, title, description, onClick }) {
       onClick={onClick}
       className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 
                  flex items-center space-x-6 hover:shadow-lg 
-                 hover:border-green-300 transition-all duration-300"
+                 hover:border-green-300 transition-all duration-300 cursor-pointer"
     >
       <div className="flex-shrink-0 bg-green-100 p-4 rounded-full">
         {icon}
@@ -63,7 +63,7 @@ export default function DashboardPage() {
             icon={<ArchiveBoxIcon />}
             title="Meus Pedidos"
             description="Ver o histórico dos seus pedidos"
-            onClick={() => alert('Página "Meus Pedidos" ainda não implementada.')}
+            onClick={() => alert('Algum acefalo cria pagina de historico de pedidos')}
           />
           
           {/* 3. MODIFIQUE O ONCLICK AQUI */}
@@ -78,7 +78,7 @@ export default function DashboardPage() {
             icon={<MapPinIcon />}
             title="Endereços"
             description="Gerir os seus endereços de entrega"
-            onClick={() => alert('Página "Endereços" ainda não implementada.')}
+            onClick={() => alert('Algum preguiçoso cria pagina de endereços')}
           />
 
         </div>

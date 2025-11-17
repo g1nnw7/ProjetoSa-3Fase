@@ -48,7 +48,7 @@ function Header({ openRegisterModal }) {
 
   return (
     <>
-      <div className="relative z-10 bg-[#FEFEFC] backdrop-blur-md px-6 py-4 flex items-center justify-between font-[Poppins]">
+      <div className="relative z-10 bg-gray-50 backdrop-blur-md px-6 py-4 flex items-center justify-between font-[Poppins]">
         
         <Link to="/">
           <img

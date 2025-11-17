@@ -151,7 +151,7 @@ export default function MyInfoPage() {
               disabled={loadingInfo} 
               className="w-full py-2 px-4 rounded-lg bg-green-600 text-white 
                          font-semibold hover:bg-green-700 transition-colors
-                         disabled:bg-gray-400"
+                         disabled:bg-gray-400 cursor-pointer"
             >
               {loadingInfo ? 'Salvando...' : 'Salvar Alterações'}
             </button>
@@ -194,7 +194,7 @@ export default function MyInfoPage() {
                 disabled={loadingPass} 
                 className="w-full py-2 px-4 rounded-lg bg-gray-700 text-white 
                            font-semibold hover:bg-gray-800 transition-colors
-                           disabled:bg-gray-400"
+                           disabled:bg-gray-400 cursor-pointer"
               >
                 {loadingPass ? 'Alterando...' : 'Mudar Senha'}
               </button>
