@@ -153,7 +153,59 @@ class AuthController {
         return res.status(200).json("Usuário deslogado!");
 
     }
+
+  async changePassword(req, res) {
+    try {
+
+      const userId = req.auth.userId; 
+      
+
+      const { senhaAtual, novaSenha } = req.body;
+
+
+      if (!senhaAtual || !novaSenha) {
+        return res.status(400).json({ error: "Todos os campos são obrigatórios." });
+      }
+      if (novaSenha.length < 8) {
+        return res.status(400).json({ error: "A nova senha deve ter pelo menos 8 caracteres." });
+      }
+
+
+      const user = await prismaClient.usuario.findUnique({
+        where: { id: userId },
+      });
+
+      if (!user) {
+        return res.status(404).json({ error: "Utilizador não encontrado." });
+      }
+
+
+      const isPasswordCorrect = await bcrypt.compare(senhaAtual, user.senha);
+      if (!isPasswordCorrect) {
+        return res.status(401).json({ error: "A senha atual está incorreta." });
+      }
+
+
+      const saltRounds = 10;
+      const hashedNewPassword = await bcrypt.hash(novaSenha, saltRounds);
+
+
+      await prismaClient.usuario.update({
+        where: { id: userId },
+        data: { senha: hashedNewPassword },
+      });
+
+      return res.status(200).json({ message: "Senha alterada com sucesso!" });
+
+    } catch (error) {
+      console.error("Erro ao alterar senha:", error);
+      res.status(500).json({ error: "Erro interno do servidor" });
+    }
+  }
+
 }
+
+
 
 
 export const authController = new AuthController();

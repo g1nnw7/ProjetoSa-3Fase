@@ -4,39 +4,53 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css' 
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { AuthProvider } from './contexts/AuthContext'
-import { CartProvider } from './contexts/CartContext'
-import Layout from '../src/pages/Layout/Layout'; 
-import Home from '../src/pages/Home/Home'
-import Login from '../src/pages//Login/Login'
-import ShopPage from '../src/pages/Shop/ShopPage'
+import { AuthProvider } from '../src/contexts/AuthContext.jsx'
+import { CartProvider } from '../src/contexts/CartContext.jsx'
+import Layout from '../src/pages/Layout/Layout.jsx'; 
+import Home from '../src/pages/Home/Home.jsx'
+import Login from '../src/pages/Login/Login.jsx'
+import ShopPage from '../src/pages/Shop/ShopPage.jsx'
+import DashboardPage from '../src/pages/Dashboard/DashboardPage.jsx' 
+import ProtectedRoute from '../src/utils/ProjectedRoutes.jsx'  
+import MyInfoPage from './pages/MyInfo/MyInfoPage.jsx'
 
 const router = createBrowserRouter([
   {
 
     path: "/",
     element: <Layout />, 
-    
     children: [
       {
         path: "/", 
         element: <Home />,
       },
       {
-        path: "/loja",
+        path: "/loja", 
         element: <ShopPage />,
       },
-      // {
-      //   path: "/dashboard", 
-      //   element: <Dashboard />,
-      // },
+      {
+        path: "/dashboard",
+        element: <ProtectedRoute />,
+        children: [
+          { 
+            path: "", 
+            element: <DashboardPage /> 
+          } ,
+          {
+            path:"info",
+            element: <MyInfoPage/>
+          }
+          
+        ]
+        
+      },
     ]
   },
   {
+
     path: "/login",
     element: <Login />,
   }
-
 ]);
 
 createRoot(document.getElementById('root')).render(
