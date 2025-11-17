@@ -83,28 +83,36 @@ const LoginForm = () => {
                         className="h-12 w-auto  block mx-auto"
                     />
                 </a> */}
-                    <h1 className="flex flex-col text-2xl font-bold text-gray-800 items-center m-5">Login</h1>
+                <h1 className="flex flex-col text-2xl font-bold text-gray-800 items-center m-5">Login</h1>
 
                 <form onSubmit={handleLogin} className="space-y-4">
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                            Email:
-                        </label>
+                    <div className="relative">
                         <input
                             type="email"
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
-                                       focus:outline-none focus:ring-2 focus:ring-green-500"
+                            className="peer w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
+                            focus:outline-none focus:ring-2 focus:ring-green-500"
+                            placeholder=" "
                         />
+                        <label
+                            htmlFor="email"
+                            className="absolute left-3 top-2 origin-[0] -translate-y-5 scale-75 transform 
+                            cursor-text bg-white px-1 text-sm font-medium text-gray-700 
+                            duration-200 ease-in-out
+                            peer-placeholder-shown:translate-y-0 
+                            peer-placeholder-shown:scale-100 
+                            peer-focus:-translate-y-5 
+                            peer-focus:scale-75 
+                            peer-focus:text-green-600"
+                        >
+                            Email:
+                        </label>
                     </div>
 
-                    <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                            Senha:
-                        </label>
+                    <div className="relative">
                         <input
                             type="password"
                             id="password"
@@ -112,9 +120,23 @@ const LoginForm = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             required
                             minLength={8}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
-                                       focus:outline-none focus:ring-2 focus:ring-green-500"
+                            className="peer w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
+                            focus:outline-none focus:ring-2 focus:ring-green-500"
+                            placeholder=" " // Importante: um placeholder com um espaço
                         />
+                        <label
+                            htmlFor="password"
+                            className="absolute left-3 top-2 origin-[0] -translate-y-5 scale-75 transform 
+                            cursor-text bg-white px-1 text-sm font-medium text-gray-700 
+                            duration-200 ease-in-out
+                            peer-placeholder-shown:translate-y-0 
+                            peer-placeholder-shown:scale-100 
+                            peer-focus:-translate-y-5 
+                            peer-focus:scale-75 
+                            peer-focus:text-green-600"
+                        >
+                            Senha:
+                        </label>
                     </div>
 
                     <button

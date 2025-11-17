@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../../contexts/CartContext'; 
 import CartSidebar from '../Cart/CartSidebar';     
 import { useAuth } from '../../contexts/AuthContext'; 
+import { toast } from 'react-toastify';
 
 function ShoppingBagIcon() {
   return (
@@ -38,6 +39,10 @@ function Header({ openRegisterModal }) {
 
   const handleLogout = () => {
     logout(); 
+    toast.error("Usuário deslogado com sucesso!", {
+    autoClose: 3000,
+    hideProgressBar: true,
+  });
     navigate('/'); 
   }
 

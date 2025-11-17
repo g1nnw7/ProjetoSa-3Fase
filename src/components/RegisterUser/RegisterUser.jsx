@@ -79,42 +79,59 @@ const RegisterUser = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Nome */}
-                <div>
-                    <label htmlFor="nomeRegisterUser" className="text-sm font-medium text-gray-700">
-                        Nome
-                    </label>
+                <div className='relative'>
                     <input
                         type="text"
                         id="nomeRegisterUser"
                         value={nome}
                         onChange={handleNomeChange}
                         required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
-                                   focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="peer w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
+                        focus:outline-none focus:ring-2 focus:ring-green-500"
+                        placeholder=" "
                     />
+                    <label htmlFor="nomeRegisterUser" 
+                            className="absolute left-3 top-2 origin-[0] -translate-y-5 scale-75 transform 
+                            cursor-text bg-white px-1 text-sm font-medium text-gray-700 
+                            duration-200 ease-in-out
+                            peer-placeholder-shown:translate-y-0 
+                            peer-placeholder-shown:scale-100 
+                            peer-focus:-translate-y-5 
+                            peer-focus:scale-75 
+                            peer-focus:text-green-600"
+                    >
+                        Nome
+                    </label>
                 </div>
 
                 {/* Email */}
-                <div>
-                    <label htmlFor="emailRegisterUser" className="text-sm font-medium text-gray-700">
-                        Email
-                    </label>
+                <div className='relative'>
                     <input
                         type="email"
                         id="emailRegisterUser"
                         value={email}
                         onChange={handleEmailChange}
                         required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
-                                   focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="peer w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
+                        focus:outline-none focus:ring-2 focus:ring-green-500"
+                        placeholder=" "
                     />
+                    <label htmlFor="emailRegisterUser" 
+                            className="absolute left-3 top-2 origin-[0] -translate-y-5 scale-75 transform 
+                            cursor-text bg-white px-1 text-sm font-medium text-gray-700 
+                            duration-200 ease-in-out
+                            peer-placeholder-shown:translate-y-0 
+                            peer-placeholder-shown:scale-100 
+                            peer-focus:-translate-y-5 
+                            peer-focus:scale-75 
+                            peer-focus:text-green-600"
+                    >
+                        Email
+                    </label>
                 </div>
 
                 {/* Senha */}
-                <div>
-                    <label htmlFor="passwordRegisterUser" className="text-sm font-medium text-gray-700">
-                        Senha
-                    </label>
+                <div className='relative'>
                     <input
                         type="password"
                         id="passwordRegisterUser"
@@ -122,16 +139,26 @@ const RegisterUser = () => {
                         onChange={handlePasswordChange}
                         required
                         minLength={8}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
-                                   focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="peer w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
+                        focus:outline-none focus:ring-2 focus:ring-green-500"
+                        placeholder=" "
                     />
+                    <label htmlFor="passwordRegisterUser" 
+                            className="absolute left-3 top-2 origin-[0] -translate-y-5 scale-75 transform 
+                            cursor-text bg-white px-1 text-sm font-medium text-gray-700 
+                            duration-200 ease-in-out
+                            peer-placeholder-shown:translate-y-0 
+                            peer-placeholder-shown:scale-100 
+                            peer-focus:-translate-y-5 
+                            peer-focus:scale-75 
+                            peer-focus:text-green-600"
+                    >
+                        Senha
+                    </label>
                 </div>
 
                 {/* Confirmar senha */}
-                <div>
-                    <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">
-                        Confirmar senha
-                    </label>
+                <div className='relative'>
                     <input
                         type="password"
                         id="confirmPassword"
@@ -139,9 +166,22 @@ const RegisterUser = () => {
                         onChange={handleConfirmPasswordChange}
                         required
                         minLength={8}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
-                                   focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="peer w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
+                        focus:outline-none focus:ring-2 focus:ring-green-500"
+                        placeholder=" "
                     />
+                    <label htmlFor="confirmPassword" 
+                        className="absolute left-3 top-2 origin-[0] -translate-y-5 scale-75 transform 
+                        cursor-text bg-white px-1 text-sm font-medium text-gray-700 
+                        duration-200 ease-in-out
+                        peer-placeholder-shown:translate-y-0 
+                        peer-placeholder-shown:scale-100 
+                        peer-focus:-translate-y-5 
+                        peer-focus:scale-75 
+                        peer-focus:text-green-600"
+                    >
+                        Confirmar senha
+                    </label>
 
                     {!isPasswordMatch && (
                         <p className="text-red-500 text-sm mt-1">
