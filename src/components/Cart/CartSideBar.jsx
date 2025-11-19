@@ -32,7 +32,7 @@ export default function CartSidebar({ isOpen, onClose }) {
     <>
       <div 
         className={`fixed inset-0 z-40 bg-opacity-50 transition-opacity
-                    ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                    ${isOpen ? 'opacity-100 backdrop-blur' : 'opacity-0 pointer-events-none'}`}
         onClick={onClose}
       ></div>
 
