@@ -13,6 +13,7 @@ import ShopPage from '../src/pages/Shop/ShopPage.jsx'
 import DashboardPage from '../src/pages/Dashboard/DashboardPage.jsx' 
 import ProtectedRoute from '../src/utils/ProjectedRoutes.jsx'  
 import MyInfoPage from './pages/MyInfo/MyInfoPage.jsx'
+import MacroCalculadora from './pages/Macro/MacroCaulculador.jsx'
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/loja", 
         element: <ShopPage />,
+      },
+      {
+        path: "calculadora",
+        element: <MacroCalculadora />
       },
       {
         path: "/dashboard",

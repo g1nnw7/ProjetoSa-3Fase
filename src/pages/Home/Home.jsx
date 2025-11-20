@@ -28,7 +28,7 @@ function Home() {
         description="Acompanhe seu consumo diário e potencialize seus resultados!"
         buttonText="Comece Agora"
         imageSrc="/img/acad.jpg"
-        url="/quiz"
+        url="/calculadora"
       />
       <Section
         title="Nossos produtos"

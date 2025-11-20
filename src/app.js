@@ -6,6 +6,7 @@ import authRouter from "./routes/authRoutes.js";
 import { productRouter } from "./routes/product.js";
 import { categoryRouter } from "./routes/category.js";
 import shippingRouter from "./routes/shippingRoutes.js";
+import alimentoRouter from "./routes/alimentos.js";
 
 export const app = express();
 
@@ -17,6 +18,7 @@ app.use("/auth", authRouter);
 
 app.use(productRouter);
 app.use(categoryRouter);
+app.use('/alimentos', alimentoRouter);
 app.use('/shipping', shippingRouter);
 
 

@@ -63,3 +63,14 @@ model Product {
 
   @@map("products")
 }
+model Alimento {
+  id           Int     @id @default(autoincrement())
+  nome         String  @unique
+  gramas       Float   // Porção base (ex: 100g)
+  calorias     Float
+  proteinas    Float
+  carboidratos Float
+  gorduras     Float
+  
+  @@map("alimentos")
+}
