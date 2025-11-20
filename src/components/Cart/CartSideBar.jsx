@@ -114,6 +114,11 @@ export default function CartSidebar({ isOpen, onClose }) {
         setDiscount(discountValue);
         setAppliedCoupon(code);
         setCouponMessage({ type: 'success', text: 'Desconto de R$ 20,00 aplicado!' });
+    } else if (code === 'BAGERLK') {
+        const discountValue = subtotal * 0.75;
+        setDiscount(discountValue);
+        setAppliedCoupon(code);
+        setCouponMessage({ type: 'success', text: 'Cupom de 75% aplicado!' });
     } else {
         setDiscount(0);
         setAppliedCoupon(null);
