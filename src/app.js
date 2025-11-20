@@ -5,22 +5,24 @@ import { auth } from "./middleware/auth.js";
 import authRouter from "./routes/authRoutes.js";
 import { productRouter } from "./routes/product.js";
 import { categoryRouter } from "./routes/category.js";
+import shippingRouter from "./routes/shippingRoutes.js";
 
 export const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// --- Rotas Públicas ---
+// Rotas Públicas
 app.use("/auth", authRouter);
 
 app.use(productRouter);
 app.use(categoryRouter);
+app.use('/shipping', shippingRouter);
 
 
-// --- Middleware global de autenticação ---
+// Middleware
 app.use(auth)
 
-// --- Rotas Privadas ---
+// Rotas Privadas
 
 app.use(usuarioRouter);
