@@ -1,4 +1,3 @@
-// Path: src/controller/Auth/AuthController.js
 
 import bcrypt from "bcrypt";
 import { prismaClient } from "../../../prisma/prisma.js";
@@ -17,12 +16,10 @@ class AuthController {
         res
     ) {
         try {
-            const { email, senha, nome} = req.body;
-            // Validação básica
+            const { email, senha, nome } = req.body;
             if (!email || !senha) {
                 return res.status(400).json({ error: "Email e senha são obrigatórios" });
             }
-            // Verificar se usuário já existe
             const existingUser = await prismaClient.usuario.findUnique({
                 where: { email },
             });
@@ -30,12 +27,10 @@ class AuthController {
             if (existingUser) {
                 return res.status(409).json({ error: "Usuário já existe" });
             }
-            // Hash da senha com bcrypt
             const saltRounds = 10;
             const hashedPassword = await bcrypt.hash(senha, saltRounds);
-            // Criar usuário no banco de dados
             const user = await prismaClient.usuario.create({
-                data: { email, senha: hashedPassword, nome: nome},
+                data: { email, senha: hashedPassword, nome: nome },
                 select: {
                     id: true,
                     email: true,
@@ -57,20 +52,16 @@ class AuthController {
             if (!user || !(await bcrypt.compare(senha, user.senha))) {
                 return res.status(401).json({ error: "Credenciais inválidas" });
             }
-            // Gerar access token (curta duração)
             const accessToken = signAccessToken({
                 userId: user.id,
                 email: user.email,
                 nome: user.nome,
             });
-
-            // Gerar refresh token (longa duração)
             const refreshToken = signRefreshToken({
                 userId: user.id,
                 email: user.email,
                 nome: user.nome,
             });
-            // Armazenar refresh token no banco de dados
             const expiresAt = new Date();
             expiresAt.setDate(expiresAt.getDate() + 7);
             console.log(refreshToken)
@@ -156,59 +147,88 @@ class AuthController {
 
     async changePassword(req, res) {
         try {
-    
-          const userId = req.auth?.id || req.auth?.userId; 
-          
-          if (!userId) {
-              // Se o token falhar ou não tiver o ID, retorna 401
-              return res.status(401).json({ error: "ID do utilizador não encontrado. Acesso negado." });
-          }
-    
-          // 2. Obter as senhas do corpo da requisição
-          const { senhaAtual, novaSenha } = req.body;
-    
-          // 3. Validação básica
-          if (!senhaAtual || !novaSenha) {
-            return res.status(400).json({ error: "Todos os campos são obrigatórios." });
-          }
-          if (novaSenha.length < 8) {
-            return res.status(400).json({ error: "A nova senha deve ter pelo menos 8 caracteres." });
-          }
-    
-          // 4. Buscar o utilizador no banco
-          const user = await prismaClient.usuario.findUnique({
-            where: { id: userId },
-          });
-    
-          if (!user) {
-            return res.status(404).json({ error: "Utilizador não encontrado." });
-          }
-    
-          // 5. Verificar se a SENHA ATUAL está correta
-          const isPasswordCorrect = await bcrypt.compare(senhaAtual, user.senha);
-          if (!isPasswordCorrect) {
-            return res.status(401).json({ error: "A senha atual está incorreta." });
-          }
-    
-          // 6. Hashear a NOVA SENHA
-          const saltRounds = 10;
-          const hashedNewPassword = await bcrypt.hash(novaSenha, saltRounds);
-    
-          // 7. Atualizar o utilizador com a nova senha hasheada
-          await prismaClient.usuario.update({
-            where: { id: userId },
-            data: { senha: hashedNewPassword },
-          });
-    
-          return res.status(200).json({ message: "Senha alterada com sucesso!" });
-    
+
+            const userId = req.auth?.id || req.auth?.userId;
+
+            if (!userId) {
+                return res.status(401).json({ error: "ID do utilizador não encontrado. Acesso negado." });
+            }
+            const { senhaAtual, novaSenha } = req.body;
+            if (!senhaAtual || !novaSenha) {
+                return res.status(400).json({ error: "Todos os campos são obrigatórios." });
+            }
+            if (novaSenha.length < 8) {
+                return res.status(400).json({ error: "A nova senha deve ter pelo menos 8 caracteres." });
+            }
+            const user = await prismaClient.usuario.findUnique({
+                where: { id: userId },
+            });
+
+            if (!user) {
+                return res.status(404).json({ error: "Utilizador não encontrado." });
+            }
+            const isPasswordCorrect = await bcrypt.compare(senhaAtual, user.senha);
+            if (!isPasswordCorrect) {
+                return res.status(401).json({ error: "A senha atual está incorreta." });
+            }
+
+            const saltRounds = 10;
+            const hashedNewPassword = await bcrypt.hash(novaSenha, saltRounds);
+            await prismaClient.usuario.update({
+                where: { id: userId },
+                data: { senha: hashedNewPassword },
+            });
+
+            return res.status(200).json({ message: "Senha alterada com sucesso!" });
+
         } catch (error) {
-          console.error("Erro ao alterar senha:", error);
-          res.status(500).json({ error: "Erro interno do servidor" });
+            console.error("Erro ao alterar senha:", error);
+            res.status(500).json({ error: "Erro interno do servidor" });
         }
-      }
     }
-    
+
+    async deleteAccount(req, res) {
+        try {
+            const userId = req.auth?.id || req.auth?.userId;
+            const { password } = req.body;
+
+            if (!userId) return res.status(401).json({ error: "Não autenticado." });
+            if (!password) return res.status(400).json({ error: "Senha é obrigatória." });
+
+            // 1. Buscar o usuário para verificar a senha
+            const user = await prismaClient.usuario.findUnique({
+                where: { id: userId },
+            });
+
+            if (!user) return res.status(404).json({ error: "Usuário não encontrado." });
+
+            // 2. Verificar senha
+            const isPasswordCorrect = await bcrypt.compare(password, user.senha);
+            if (!isPasswordCorrect) {
+                return res.status(401).json({ error: "Senha incorreta." });
+            }
+
+            // 3. Transação para deletar dados relacionados primeiro (Tokens, Endereços, etc)
+            // Isso evita erros de chave estrangeira (Foreign Key Constraint)
+            await prismaClient.$transaction([
+                prismaClient.token.deleteMany({ where: { usuarioId: userId } }),
+                // Adicione aqui outras tabelas se necessário, ex:
+                // prismaClient.endereco.deleteMany({ where: { userId: userId } }), 
+                prismaClient.usuario.delete({ where: { id: userId } }),
+            ]);
+
+            return res.status(200).json({ message: "Conta excluída com sucesso." });
+
+        } catch (error) {
+            console.error("Erro ao excluir conta:", error);
+            return res.status(500).json({ error: "Erro interno ao excluir conta." });
+        }
+    }
+
+
+}
+
+
 
 
 
