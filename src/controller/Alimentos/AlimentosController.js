@@ -15,7 +15,6 @@ class AlimentoController {
     }
   }
 
-  // POST /alimentos - (Opcional) Para cadastrar novos via API
   async createAlimento(req, res) {
     try {
       const { nome, gramas, calorias, proteinas, carboidratos, gorduras } = req.body;
