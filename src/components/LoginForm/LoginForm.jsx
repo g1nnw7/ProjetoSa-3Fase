@@ -4,7 +4,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import Modal from "../Modal/Modal"; 
-import SimpleCaptcha from "../Captcha/SimpleCaptcha";
+import SimpleCaptcha from "../Captcha/SimpleCaptcha"; 
+import RegisterUser from "../RegisterUser/RegisterUser"; 
 
 const LoginForm = () => {
     const [email, setEmail] = useState("");
@@ -12,8 +13,10 @@ const LoginForm = () => {
     
     const { login, user } = useAuth();
     const navigate = useNavigate();
-    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false); 
-    const [showLoginCaptchaModal, setShowLoginCaptchaModal] = useState(false); 
+
+
+    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+    const [showLoginCaptchaModal, setShowLoginCaptchaModal] = useState(false);
     const [isCaptchaValid, setIsCaptchaValid] = useState(false); 
     const [loading, setLoading] = useState(false); 
 
@@ -22,7 +25,6 @@ const LoginForm = () => {
             navigate("/");
         }
     }, [user, navigate]);
-
     const handlePreLogin = (e) => {
         e.preventDefault();
         setShowLoginCaptchaModal(true);
@@ -57,7 +59,9 @@ const LoginForm = () => {
             localStorage.setItem("refreshToken", refreshToken);
 
             login(user);
+
             toast.success("Login realizado com sucesso!", { autoClose: 3000, hideProgressBar: true });
+            
             setShowLoginCaptchaModal(false);
 
             setTimeout(() => navigate("/"), 2000);
@@ -151,7 +155,7 @@ const LoginForm = () => {
                     Não tem conta?{" "}
                     <button
                         className="text-green-600 hover:underline font-medium cursor-pointer"
-                        onClick={() => setIsRegisterModalOpen(true)}
+                        onClick={() => setIsRegisterModalOpen(true)} 
                     >
                         Criar conta
                     </button>
@@ -177,6 +181,10 @@ const LoginForm = () => {
                             {loading ? "Verificando..." : "Confirmar Login"}
                         </button>
                     </div>
+                </Modal>
+
+                <Modal isOpen={isRegisterModalOpen} onClose={() => setIsRegisterModalOpen(false)}>
+                    <RegisterUser />
                 </Modal>
             </div>
         </div>
