@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext"; 
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import Modal from "../Modal/Modal";
-import RegisterUser from "../RegisterUser/RegisterUser";
+import Modal from "../Modal/Modal"; 
+import SimpleCaptcha from "../Captcha/SimpleCaptcha";
 
 const LoginForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    
     const { login, user } = useAuth();
     const navigate = useNavigate();
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false); 
+    const [showLoginCaptchaModal, setShowLoginCaptchaModal] = useState(false); 
+    const [isCaptchaValid, setIsCaptchaValid] = useState(false); 
+    const [loading, setLoading] = useState(false); 
 
     useEffect(() => {
         if (user) {
@@ -21,8 +23,18 @@ const LoginForm = () => {
         }
     }, [user, navigate]);
 
-    const handleLogin = async (e) => {
+    const handlePreLogin = (e) => {
         e.preventDefault();
+        setShowLoginCaptchaModal(true);
+    };
+
+    const performLogin = async () => {
+        if (!isCaptchaValid) {
+            toast.error("Por favor, resolva o Captcha corretamente.");
+            return;
+        }
+
+        setLoading(true);
 
         try {
             const data = {
@@ -33,40 +45,30 @@ const LoginForm = () => {
             const response = await axios.post("http://localhost:3000/auth/login", data);
 
             if (response.data.error) {
-                toast.error(response.data.error, {
-                    autoClose: 3000,
-                    hideProgressBar: true,
-                });
+                toast.error(response.data.error, { autoClose: 3000, hideProgressBar: true });
+                setLoading(false);
                 return;
             }
 
             const { user, accessToken, refreshToken } = response.data;
 
-            localStorage.setItem("usuarioLogado", JSON.stringify(user))
+            localStorage.setItem("usuarioLogado", JSON.stringify(user));
             localStorage.setItem("accessToken", accessToken);
             localStorage.setItem("refreshToken", refreshToken);
 
             login(user);
-
-            toast.success("Login realizado com sucesso!", {
-                autoClose: 3000,
-                hideProgressBar: true,
-            });
+            toast.success("Login realizado com sucesso!", { autoClose: 3000, hideProgressBar: true });
+            setShowLoginCaptchaModal(false);
 
             setTimeout(() => navigate("/"), 2000);
         } catch (error) {
             console.error("Erro ao verificar o usuário:", error);
+            setLoading(false);
 
             if (error.response?.status === 401) {
-                toast.error("Email ou senha inválidos!", {
-                    autoClose: 3000,
-                    hideProgressBar: true,
-                });
+                toast.error("Email ou senha inválidos!", { autoClose: 3000, hideProgressBar: true });
             } else {
-                toast.error("Erro ao conectar com o servidor!", {
-                    autoClose: 3000,
-                    hideProgressBar: true,
-                });
+                toast.error("Erro ao conectar com o servidor!", { autoClose: 3000, hideProgressBar: true });
             }
         }
     };
@@ -75,17 +77,9 @@ const LoginForm = () => {
         <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
             <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-sm">
 
-                {/* Logo */}
-                {/* <a href="/" className="flex flex-col items-center mb-6">
-                    <img 
-                        src="/img/logo.png" 
-                        alt="Logo" 
-                        className="h-12 w-auto  block mx-auto"
-                    />
-                </a> */}
                 <h1 className="flex flex-col text-2xl font-bold text-gray-800 items-center m-5">Login</h1>
 
-                <form onSubmit={handleLogin} className="space-y-4">
+                <form onSubmit={handlePreLogin} className="space-y-4">
                     <div className="relative">
                         <input
                             type="email"
@@ -122,7 +116,7 @@ const LoginForm = () => {
                             minLength={8}
                             className="peer w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm 
                             focus:outline-none focus:ring-2 focus:ring-green-500"
-                            placeholder=" " // Importante: um placeholder com um espaço
+                            placeholder=" "
                         />
                         <label
                             htmlFor="password"
@@ -157,14 +151,32 @@ const LoginForm = () => {
                     Não tem conta?{" "}
                     <button
                         className="text-green-600 hover:underline font-medium cursor-pointer"
-                        onClick={() => setIsModalOpen(true)}
+                        onClick={() => setIsRegisterModalOpen(true)}
                     >
                         Criar conta
                     </button>
                 </p>
 
-                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                    <RegisterUser />
+
+                <Modal isOpen={showLoginCaptchaModal} onClose={() => setShowLoginCaptchaModal(false)}>
+                    <div className="text-center p-4">
+                        <h2 className="text-xl font-bold text-gray-800 mb-2">Verificação de Segurança</h2>
+                        <p className="text-gray-600 mb-6 text-sm">
+                            Para continuar, resolva o captcha abaixo.
+                        </p>
+                        
+                        <div className="mb-6">
+                            <SimpleCaptcha onValidate={setIsCaptchaValid} />
+                        </div>
+
+                        <button 
+                            onClick={performLogin}
+                            disabled={loading}
+                            className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg shadow transition-all disabled:bg-gray-400 cursor-pointer"
+                        >
+                            {loading ? "Verificando..." : "Confirmar Login"}
+                        </button>
+                    </div>
                 </Modal>
             </div>
         </div>
