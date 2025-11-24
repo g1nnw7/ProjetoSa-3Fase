@@ -25,7 +25,7 @@ const Section = ({
       ref={ref}
       className={`w-full flex ${
         rowReverse ? "flex-row-reverse" : "flex-row"
-      } items-center justify-between bg-[#F5EEEE]`}
+      } items-center justify-between bg-[#f5f5f5]`}
     >
       {/* Imagem */}
       <motion.div

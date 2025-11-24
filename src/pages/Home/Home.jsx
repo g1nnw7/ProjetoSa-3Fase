@@ -1,6 +1,8 @@
 import React from 'react'
 import Hero from '../../components/Hero/Hero'
 import Section from '../../components/Section/Section'
+import ProductCarousel from '../../components/ProductCarousel/ProductCarousel'
+
 
 function Home() {
 
@@ -8,6 +10,7 @@ function Home() {
 
     <>
       <Hero />
+      <ProductCarousel />
       <Section
         title="Plano de Dieta Personalizado"
         description="Faça o quiz e nós montamos o seu plano alimentar!"
