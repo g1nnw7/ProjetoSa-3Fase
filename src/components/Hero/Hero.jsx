@@ -7,7 +7,7 @@ const Hero = () => {
 
   return (
     <motion.section
-      className='relative h-screen w-full bg-cover bg-center bg-no-repeat border-b-[10px]'
+      className='relative h-screen w-full bg-cover bg-center bg-no-repeat'
       ref={ref}
       style={{ backgroundImage: `url('/img/fundohero.png')` }} 
       initial={{ opacity: 0, y: 50 }} // Começa invisível e 50px abaixo
