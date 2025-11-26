@@ -134,7 +134,7 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-gray-50 p-8">
         <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-center mb-8">
-                <h1 className="text-3xl font-bold text-gray-800">Painel Administrativo</h1>
+                <h1 className="text-3xl font-bold text-green-600">Painel Administrativo</h1>
                 <div className="bg-white p-2 rounded-lg shadow-sm flex gap-2">
                     <button 
                         onClick={() => setActiveTab('products')}
@@ -162,10 +162,10 @@ export default function AdminDashboard() {
                         <table className="w-full text-left">
                             <thead className="bg-gray-50 text-gray-600">
                                 <tr>
-                                    <th className="p-4">Nome</th>
-                                    <th className="p-4">Preço</th>
-                                    <th className="p-4">Categoria</th>
-                                    <th className="p-4 text-right">Ações</th>
+                                    <th className="p-4 text-green-600">Nome</th>
+                                    <th className="p-4 text-green-600">Preço</th>
+                                    <th className="p-4 text-green-600">Categoria</th>
+                                    <th className="p-4 text-right text-green-600">Ações</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
@@ -209,7 +209,7 @@ export default function AdminDashboard() {
                                             <td className="p-4 font-medium">{u.nome}</td>
                                             <td className="p-4">{u.email}</td>
                                             <td className="p-4">
-                                                <span className={`px-2 py-1 rounded text-xs font-bold ${u.role === 'ADMIN' ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-700'}`}>
+                                                <span className={`px-2 py-1 rounded text-xs font-bold ${u.role === 'ADMIN' ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-700'}`}>
                                                     {u.role}
                                                 </span>
                                             </td>
