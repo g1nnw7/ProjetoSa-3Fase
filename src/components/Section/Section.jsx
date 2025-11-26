@@ -29,7 +29,7 @@ const Section = ({
     >
       {/* Imagem */}
       <motion.div
-        className="w-1/2 flex justify-center items-center"
+        className="w-1/2 h-175 flex justify-center items-center"
         initial={{ opacity: 0, x: imageInitialX }}
         animate={isInView ? { opacity: 1, x: 0 } : {}}
         transition={{ duration: 1.2 }}
@@ -44,20 +44,20 @@ const Section = ({
 
       {/* Texto */}
       <motion.div
-        className="w-1/2 flex flex-col justify-center px-12 py-16"
+        className="flex flex-col items-center justify-center text-center w-1/2 h-1/2"
         initial={{ opacity: 0, x: textInitialX }}
         animate={isInView ? { opacity: 1, x: 0 } : {}}
         transition={{ duration: 1.2, delay: 0.2 }}
       >
-        <h2 className="text-[3rem] mb-6 text-[#0c7403] font-Poppins">
+        <h2 className="text-3xl text-center md:text-4xl lg:text-5xl font-bold text-green-700 leading-tight mb-4 animate-fadeIn -translate-y-15 relative">
           {title}
         </h2>
-        <p className="text-lg mb-10 text-[#333] leading-relaxed">
+        <p className="text-gray-600 text-center text-xl md:text-xl max-w-xl leading-relaxed mb-8 animate-fadeIn delay-150">
           {description}
         </p>
         <button
           onClick={handleClick}
-          className="w-fit px-12 py-5 bg-[#6cc24a] hover:bg-[#5aa73e] text-white rounded-md font-medium cursor-pointer transition-all duration-300 text-[1.3rem]"
+          className="w-fit px-12 align-center py-5 bg-[#6cc24a] hover:bg-[#5aa73e] text-white rounded-md font-medium cursor-pointer transition-all duration-300 text-[1.3rem]"
         >
           {buttonText}
         </button>
