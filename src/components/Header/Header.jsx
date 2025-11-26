@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useCart } from '../../contexts/CartContext'; 
-import CartSidebar from '../Cart/CartSidebar';     
-import { useAuth } from '../../contexts/AuthContext'; 
+import { useCart } from '../../contexts/CartContext.jsx'; 
+import CartSidebar from '../Cart/CartSidebar.jsx';     
+import { useAuth } from '../../contexts/AuthContext.jsx'; 
 import { toast } from 'react-toastify';
 
 function ShoppingBagIcon() {
@@ -23,12 +23,19 @@ function UserIcon() {
 
 function LogoutIcon() { 
   return ( 
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6"> 
-  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m-3-3 3-3m0 0-3-3m3 3H9" /> 
-  </svg> 
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6"> 
+      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m-3-3 3-3m0 0-3-3m3 3H9" /> 
+    </svg> 
   ); 
 }
+function AdminIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 ">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12c5.16-1.26 9-6.45 9-12V5Zm0 3.9a3 3 0 1 1-3 3a3 3 0 0 1 3-3Zm0 7.9c2 0 6 1.09 6 3.08a7.2 7.2 0 0 1-12 0c0-1.99 4-3.08 6-3.08Z" />
+    </svg>
+  );
 
+}
 
 
 function Header({ openRegisterModal }) {
@@ -40,9 +47,9 @@ function Header({ openRegisterModal }) {
   const handleLogout = () => {
     logout(); 
     toast.error("Usuário deslogado com sucesso!", {
-    autoClose: 3000,
-    hideProgressBar: true,
-  });
+      autoClose: 3000,
+      hideProgressBar: true,
+    });
     navigate('/'); 
   }
 
@@ -83,6 +90,15 @@ function Header({ openRegisterModal }) {
                 Bem-vindo,&nbsp;
                 <span className="text-[#6cc24a] font-semibold">{user.nome}</span>
               </span>
+              {user.role === 'ADMIN' && (
+                <button
+                  onClick={() => navigate('/admin')}
+                  className="relative p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-full transition-colors cursor-pointer"
+                  title="Painel Administrativo"
+                >
+                  <AdminIcon />
+                </button>
+              )}
 
               <button
                 onClick={() => navigate('/dashboard')} 
@@ -95,13 +111,12 @@ function Header({ openRegisterModal }) {
               <button
                 onClick={handleLogout}
                 className="relative p-2 text-gray-600 hover:text-red-600 transition-colors rounded-full hover:bg-red-100 cursor-pointer"
+                aria-label="Sair"
               >
                 <LogoutIcon/>
               </button>
             </>
           )}
-
-          {/* Botão do Carrinho */}
           <button
             onClick={() => setIsCartOpen(true)}
             className="relative p-2 text-gray-600 hover:text-green-600 transition-colors rounded-full hover:bg-gray-100 cursor-pointer"
@@ -109,12 +124,10 @@ function Header({ openRegisterModal }) {
           >
             <ShoppingBagIcon />
             {totalItems > 0 && (
-
               <span 
                 className="absolute -top-1 -right-1 grid h-5 w-5 place-items-center 
                            rounded-full bg-red-600 text-xs font-bold text-white"
               >
-
                 {totalItems}
               </span>
             )}

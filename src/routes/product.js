@@ -1,7 +1,10 @@
 import { Router } from "express";
 import { productController } from "../controller/Product/ProductController.js";
+import { auth } from "../middleware/auth.js";
 
 export const productRouter = Router();
 
-// Rota pública para listar/filtrar todos os produtos
-productRouter.get("/products", productController.getAllProducts);
+productRouter.get("/products",  productController.getAllProducts);
+productRouter.post("/products", auth, productController.createProduct);
+productRouter.put("/products/:id", auth, productController.updateProduct);
+productRouter.delete("/products/:id", auth, productController.deleteProduct);

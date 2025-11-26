@@ -1,21 +1,21 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["relationJoins"]
 }
-
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model Usuario{
-  id Int @id @default(autoincrement())
-  nome String
+model Usuario {
+  id    Int     @id @default(autoincrement())
+  nome  String
   senha String
-  email String @unique
+  email String  @unique
+  role  String  @default("USER")
   token Token[]
- 
+
   @@map("usuario")
 }
 
@@ -30,43 +30,45 @@ model Token {
 
   @@map("token")
 }
+
 model Category {
-  id        String    @id @default(cuid())
-  nome      String    @unique
-  slug      String    @unique
-  products  Product[]
+  id       String    @id @default(cuid())
+  nome     String    @unique
+  slug     String    @unique
+  products Product[]
 
   @@map("categories")
 }
 
 model Product {
-  id            String    @id @default(cuid())
+  id            String   @id @default(cuid())
   nome          String
-  slug          String    @unique
-  descricao     String    @db.Text
+  slug          String   @unique
+  descricao     String   @db.Text
   preco         Float
   imageUrl      String
-  estoque       Int       @default(0)
-  categoryId String
-  category   Category  @relation(fields: [categoryId], references: [id])
-  calorias      Int?     
-  proteinas     Float?  
-  carboidratos  Float?  
-  gorduras      Float?  
+  estoque       Int      @default(0)
+  categoryId    String
+  category      Category @relation(fields: [categoryId], references: [id])
+  calorias      Int?
+  proteinas     Float?
+  carboidratos  Float?
+  gorduras      Float?
   isGlutenFree  Boolean  @default(false)
   isVegano      Boolean  @default(false)
   isLactoseFree Boolean  @default(false)
 
   @@map("products")
 }
+
 model Alimento {
-  id           Int     @id @default(autoincrement())
-  nome         String  @unique
+  id           Int    @id @default(autoincrement())
+  nome         String @unique
   gramas       Float
   calorias     Float
   proteinas    Float
   carboidratos Float
   gorduras     Float
-  
+
   @@map("alimentos")
 }
