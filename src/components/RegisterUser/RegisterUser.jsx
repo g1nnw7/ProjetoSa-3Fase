@@ -43,7 +43,8 @@ const RegisterUser = () => {
             await axios.post('http://localhost:3000/auth/register', {
                 nome: nome,
                 email: email,
-                senha: password
+                senha: password,
+                role: "USER"
             })
 
             setIsSaving(false)
