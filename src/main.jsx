@@ -1,65 +1,70 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import './index.css'
+import './index.css' 
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { AuthProvider } from '../src/contexts/AuthContext.jsx'
-import { CartProvider } from '../src/contexts/CartContext.jsx'
-import Layout from '../src/pages/Layout/Layout.jsx';
-import Home from '../src/pages/Home/Home.jsx'
-import Login from '../src/pages/Login/Login.jsx'
-import ShopPage from '../src/pages/Shop/ShopPage.jsx'
-import DashboardPage from '../src/pages/Dashboard/DashboardPage.jsx'
-import ProtectedRoute from '../src/utils/ProjectedRoutes.jsx'
-import MyInfoPage from './pages/MyInfo/MyInfoPage.jsx'
+import { AuthProvider } from './contexts/AuthContext.jsx'
+import { CartProvider } from './contexts/CartContext.jsx'
+import Layout from './pages/Layout/Layout.jsx'; 
+import Home from './pages/Home/Home.jsx'
+import Login from './pages/Login/Login.jsx'
+import ShopPage from './pages/Shop/ShopPage.jsx'
 import MacroCalculadora from './pages/Macro/MacroCaulculador.jsx'
-import AdminRoute from './routes/adminRoute.jsx'
+import DashboardPage from './pages/Dashboard/DashboardPage.jsx' 
+import MyInfoPage from './pages/MyInfo/MyInfoPage.jsx'
+import AddressesPage from './pages/Dashboard/AdressPage.jsx' 
+import CheckoutPage from './pages/Checkout/CheckoutPage.jsx' 
+import ProtectedRoute from './routes/adminRoute.jsx'  
 import AdminDashboard from './pages/Admin/AdminDashboard.jsx'
+import AdminRoute from './routes/adminRoute.jsx'
 
 const router = createBrowserRouter([
   {
-
     path: "/",
-    element: <Layout />,
+    element: <Layout />, 
     children: [
       {
-        path: "/",
+        path: "/", 
         element: <Home />,
       },
       {
-        path: "/loja",
+        path: "loja", 
         element: <ShopPage />,
       },
       {
-        path: "calculadora",
-        element: <MacroCalculadora />
+        path: "calculadora", 
+        element: <MacroCalculadora />,
       },
+      
       {
-        path: "/dashboard",
         element: <ProtectedRoute />,
         children: [
+
           {
-            path: "",
-            element: <DashboardPage />
+             path: "dashboard",
+             children: [
+                { path: "", element: <DashboardPage /> }, 
+                { path: "info", element: <MyInfoPage /> }, 
+                { path: "addresses", element: <AddressesPage /> }
+             ]
           },
           {
-            path: "info",
-            element: <MyInfoPage />
+            path: "checkout",
+            element: <CheckoutPage /> 
           }
         ]
-      },
+      }, 
       {
-            path: "/admin",
-            element: <AdminRoute />,
-            children: [
-              { path: "", element: <AdminDashboard /> } 
-            ]
-          }
+        path: "admin", 
+        element: <AdminRoute />, 
+        children: [
+          { path: "", element: <AdminDashboard /> } 
+        ]
+      }
     ]
   },
   {
-
     path: "/login",
     element: <Login />,
   }

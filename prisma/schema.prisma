@@ -9,12 +9,13 @@ datasource db {
 }
 
 model Usuario {
-  id    Int     @id @default(autoincrement())
-  nome  String
-  senha String
-  email String  @unique
-  role  String  @default("USER")
-  token Token[]
+  id       Int        @id @default(autoincrement())
+  nome     String
+  senha    String
+  email    String     @unique
+  role     String     @default("USER")
+  token    Token[]
+  Endereco Endereco[]
 
   @@map("usuario")
 }
@@ -71,4 +72,21 @@ model Alimento {
   gorduras     Float
 
   @@map("alimentos")
+}
+
+model Endereco {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  apelido     String // Ex: Casa, Trabalho
+  rua         String
+  numero      String
+  complemento String?
+  cep         String
+  cidade      String
+  estado      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        Usuario  @relation(fields: [userId], references: [id])
+
+  @@map("enderecos")
 }

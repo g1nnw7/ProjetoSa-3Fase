@@ -46,8 +46,6 @@ export default function DashboardPage() {
   return (
     <div className="bg-gray-50 min-h-screen">
       <div className="container mx-auto max-w-4xl p-4 md:p-8">
-        
-        {/* Cabeçalho de Boas-vindas */}
         <div className="mb-8 p-6 bg-white rounded-lg shadow-sm border border-gray-200">
           <h1 className="text-4xl font-bold text-gray-800">
             Olá, <span className="text-green-600">{user.nome}!</span>
@@ -56,8 +54,6 @@ export default function DashboardPage() {
             Bem-vindo ao seu painel. Aqui você pode gerir as suas informações e pedidos.
           </p>
         </div>
-
-        {/* Grelha de Cartões de Ação */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <DashboardCard
             icon={<ArchiveBoxIcon />}
@@ -66,7 +62,6 @@ export default function DashboardPage() {
             onClick={() => alert('Algum acefalo cria pagina de historico de pedidos')}
           />
           
-          {/* 3. MODIFIQUE O ONCLICK AQUI */}
           <DashboardCard
             icon={<UserCircleIcon />}
             title="Minhas Informações"
@@ -78,7 +73,7 @@ export default function DashboardPage() {
             icon={<MapPinIcon />}
             title="Endereços"
             description="Gerir os seus endereços de entrega"
-            onClick={() => alert('Algum preguiçoso cria pagina de endereços')}
+            onClick={() => navigate('/dashboard/addresses')}
           />
 
         </div>
