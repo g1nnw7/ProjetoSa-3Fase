@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import { useCart } from '../../contexts/CartContext.jsx'; 
-import CartItem from './CartItem.jsx'; 
-import axios from 'axios';
+import { useCart } from '../../contexts/CartContext'; 
+import CartItem from './CartItem'; 
 
-
+// ... (Mantenha as funções de ícones: XMarkIcon, EmptyCartIcon, TagIcon, MapPinIcon iguais ao que você já tem) ...
 function XMarkIcon() {
   return <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>;
 }
@@ -20,7 +19,9 @@ function MapPinIcon(props) {
 
 export default function CartSidebar({ isOpen, onClose }) {
   const { cartState, subtotal, totalItems } = useCart();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+
+  // --- ESTADOS ---
   const [cep, setCep] = useState('');
   const [shippingOptions, setShippingOptions] = useState([]);
   const [selectedShipping, setSelectedShipping] = useState(null);
@@ -33,6 +34,7 @@ export default function CartSidebar({ isOpen, onClose }) {
   const [appliedCoupon, setAppliedCoupon] = useState(null); 
   const [couponMessage, setCouponMessage] = useState({ type: '', text: '' }); 
 
+  // --- LÓGICA DE FRETE ---
   const handleCepChange = (e) => {
     let value = e.target.value.replace(/\D/g, '');
     if (value.length > 8) value = value.substring(0, 8);
@@ -86,6 +88,7 @@ export default function CartSidebar({ isOpen, onClose }) {
     }
   };
 
+  // --- LÓGICA DE CUPOM ---
   const handleApplyCoupon = () => {
     if (!couponCode) return;
     
@@ -97,18 +100,17 @@ export default function CartSidebar({ isOpen, onClose }) {
         setDiscount(discountValue);
         setAppliedCoupon(code);
         setCouponMessage({ type: 'success', text: 'Cupom de 10% aplicado!' });
-    } else if (code === 'BAGERLK') {
-        const discountValue = subtotal * 1; 
-        setDiscount(discountValue);
-        setAppliedCoupon(code);
-        setCouponMessage({ type: 'success', text: 'Desconto de 100% dos guri aplicado!' });
     } else if (code === '1COMPRA') {
         const discountValue = 20.00; 
         setDiscount(discountValue);
         setAppliedCoupon(code);
         setCouponMessage({ type: 'success', text: 'Desconto de R$ 20,00 aplicado!' });
-    }
-    else {
+    } else if (code === 'BAGERLK') {
+        const discountValue = subtotal * 1; 
+        setDiscount(discountValue);
+        setAppliedCoupon(code);
+        setCouponMessage({ type: 'success', text: 'Desconto de 100% aplicado pros guri!' });
+    } else {
         setDiscount(0);
         setAppliedCoupon(null);
         setCouponMessage({ type: 'error', text: 'Cupom inválido.' });
@@ -122,13 +124,23 @@ export default function CartSidebar({ isOpen, onClose }) {
       setCouponMessage({ type: '', text: '' });
   };
 
+  // --- AÇÃO DE CHECKOUT (MODIFICADA) ---
   const handleCheckout = () => {
     if (!selectedShipping) {
         setCepError('Por favor, calcule o frete antes de finalizar.');
         return;
     }
+    // Fecha o carrinho
     onClose();
-    navigate('/checkout');
+    
+    // AQUI ESTÁ A MÁGICA: Passamos os dados via 'state'
+    navigate('checkout', { 
+      state: { 
+        shippingOption: selectedShipping, 
+        discountValue: discount,
+        couponCode: appliedCoupon
+      } 
+    });
   };
 
   const shippingCost = selectedShipping ? selectedShipping.price : 0;
@@ -154,6 +166,7 @@ export default function CartSidebar({ isOpen, onClose }) {
               <XMarkIcon />
             </button>
           </div>
+
           {cartState.items.length === 0 ? (
             <div className="flex-1 flex flex-col justify-center items-center p-4">
               <EmptyCartIcon />
@@ -170,7 +183,8 @@ export default function CartSidebar({ isOpen, onClose }) {
 
           {cartState.items.length > 0 && (
             <div className="p-4 border-t bg-gray-50">
-
+              
+              {/* FRETE */}
               <div className="mb-4 border-b border-gray-200 pb-4">
                 <p className="text-sm font-medium text-gray-700 mb-2 flex items-center"><MapPinIcon className="w-4 h-4 mr-1"/> Calcular Frete</p>
                 <div className="flex gap-2">
@@ -210,6 +224,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                 )}
               </div>
 
+              {/* CUPOM */}
               <div className="mb-4 border-b border-gray-200 pb-4">
                  <p className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
                     <TagIcon className="w-4 h-4" /> Cupom de Desconto
@@ -234,6 +249,8 @@ export default function CartSidebar({ isOpen, onClose }) {
                      <p className={`text-xs mt-1 ${couponMessage.type === 'error' ? 'text-red-500' : 'text-green-600'}`}>{couponMessage.text}</p>
                  )}
               </div>
+
+              {/* RESUMO */}
               <div className="space-y-1 mb-4 text-sm text-gray-600">
                 <div className="flex justify-between"><span>Subtotal:</span><span>R$ {subtotal.toFixed(2).replace('.', ',')}</span></div>
                 {selectedShipping && <div className="flex justify-between"><span>Frete:</span><span>R$ {selectedShipping.price.toFixed(2).replace('.', ',')}</span></div>}
