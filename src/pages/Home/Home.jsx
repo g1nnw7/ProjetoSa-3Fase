@@ -13,33 +13,31 @@ function Home() {
       <ProductCarousel />
       <Section
         title="Plano de Dieta Personalizado"
-        description="Faça o quiz e nós montamos o seu plano alimentar!"
+        description="Seu corpo é único, e sua alimentação também deve ser!
+        Uma dieta personalizada melhora energia, bem-estar e resultados a longo prazo.
+        Responda ao quiz e descubra o plano ideal para alcançar suas metas.!"
         buttonText="Saiba mais"
         imageSrc="/img/dietasection.jpg"
         url="/Quiz"
       />
       <Section
-        title="Cadastro de Alimentos"
-        description="Nossa ferramenta possibilita a personalização dos alimentos e suas quantidades para maior conforto"
-        buttonText="Ver produtos"
-        imageSrc="/img/alimentoaqui.jpg"
-        url="/alimentos"
-        rowReverse
-      />
-      <Section
         title="Consumo Diário"
-        description="Acompanhe seu consumo diário e potencialize seus resultados!"
+        description="Resultados reais vêm de hábitos consistentes — e monitorar sua ingestão é o passo decisivo.
+        Com o consumo diário organizado, você melhora energia, foco e rendimento no treino.
+        Inicie agora e veja como pequenos ajustes podem transformar seu desempenho."
         buttonText="Comece Agora"
         imageSrc="/img/acad.jpg"
         url="/calculadora"
+        rowReverse
       />
       <Section
         title="Nossos produtos"
-        description="Nossos produtos são desenvolvidos com tecnologia e respeito ao meio ambiente. Qualidade e design que inspiram."
+        description="Aqui você encontra produtos feitos para quem busca desempenho de verdade.
+        Ingredientes selecionados, segurança garantida e resultados que inspiram confiança.
+        Conheça nossa linha e escolha o que vai impulsionar sua evolução."
         buttonText="Ver produtos"
         imageSrc="/img/pratileira.png"
         url="/loja"
-        rowReverse
       />
     </>
   )

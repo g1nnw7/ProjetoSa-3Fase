@@ -29,7 +29,7 @@ const productsData = [
     slug: 'whey-isolado-zero-carb-900g',
     descricao: 'Proteína isolada de rápida absorção, sem carboidratos e sem lactose. Sabor chocolate.',
     preco: 189.90,
-    imageUrl: 'public/img/wheyIsolado900g.png',
+    imageUrl: 'public/img/WheyIsolado900g.png',
     estoque: 30,
     proteinas: 28,
     isLactoseFree: true,

@@ -86,13 +86,13 @@ function ProductCarousel() {
   };
 
   return (
-    <div className="w-full py-10 relative px-8 bg-[#d4d4d4f6]">
-      <h1 className="text-[3rem] text-center mb-6 text-[#000000] font-Poppins">Conheça nossos produtos!</h1>
+    <div className="w-full py-10 relative px-8 bg-gray-50">
+      <h1 className="text-[3rem] text-center mb-6 text-[#000000] font-[Poppins]">Conheça nossos produtos!</h1>
       <Slider {...settings}>
         {products.map((product) => (
           <div key={product.id} className="px-4">
             <div
-              className="bg-white shadow rounded-2xl m-6 p-6 h-100 w-125 text-center transition-all duration-500 
+              className="bg-white font-[Poppins] shadow rounded-2xl m-6 p-6 h-100 w-125 text-center transition-all duration-500 
               transform hover:scale-105 hover:shadow-xl "
             >
               <img
@@ -101,13 +101,13 @@ function ProductCarousel() {
                 className="w-40 h-40 mx-auto object-contain"
               />
 
-              <h3 className="text-lg font-semibold mt-4">{product.nome}</h3>
+              <h3 className="text-lg font-[Poppins]  mt-4">{product.nome}</h3>
 
               <p className="text-gray-500 text-sm mt-1">
                 {product.descricao}
               </p>
 
-              <p className="text-green-600 font-bold text-xl mt-3">
+              <p className="text-green-600 font-[Poppins] text-xl mt-3">
                 R$ {product.preco.toFixed(2)}
               </p>
 
