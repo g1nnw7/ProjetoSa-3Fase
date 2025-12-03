@@ -2,22 +2,22 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; 
 
 function ProductCarousel() {
   const [products, setProducts] = useState([]);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
   function RigthIcon() {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24" className="cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="cursor-pointer w-6 h-6 text-gray-600">
       <path fill="currentColor" d="M10.164 8.964a.9.9 0 0 1 1.272 0l2.4 2.4a.9.9 0 0 1 0 1.272l-2.4 2.4a.9.9 0 1 1-1.272-1.272L11.927 12l-1.763-1.764a.9.9 0 0 1 0-1.272"/>
   </svg>
     );
   }
   function LeftIcon() {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24" className="cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="cursor-pointer w-6 h-6 text-gray-600">
       <path fill="currentColor" d="M13.836 8.964a.9.9 0 0 1 0 1.272L12.073 12l1.763 1.764a.9.9 0 1 1-1.273 1.272l-2.4-2.4a.9.9 0 0 1 0-1.272l2.4-2.4a.9.9 0 0 1 1.273 0"/>
   </svg>
     );
@@ -46,7 +46,6 @@ function ProductCarousel() {
         navigate('/loja');
     }
   };
-
 
   const NextArrow = ({ onClick }) => (
     <button
@@ -89,7 +88,7 @@ function ProductCarousel() {
 
   return (
     <div className="w-full py-10 relative px-8 bg-gray-50">
-      <h1 className="text-[3rem] text-center mb-6 text-green-700 font-[Poppins]">Conheça nossos produtos!</h1>
+      <h1 className="text-[3rem] text-center mb-6 text-[#000000] font-[Poppins]">Conheça nossos produtos!</h1>
       
       {products.length > 0 ? (
         <Slider {...settings}>
@@ -100,7 +99,11 @@ function ProductCarousel() {
                 transform hover:scale-105 hover:shadow-xl "
                 >
                 <img
-                    src={`/${product.imageUrl.replace("public/", "")}`}
+                    // CORREÇÃO: Verifica se já tem barra inicial para não duplicar
+                    src={product.imageUrl.startsWith('/') 
+                          ? product.imageUrl 
+                          : `/${product.imageUrl.replace("public/", "")}`
+                    }
                     alt={product.nome}
                     className="w-40 h-40 mx-auto object-contain"
                     onError={(e) => { e.target.src = 'https://placehold.co/200x200?text=Produto'; }}
