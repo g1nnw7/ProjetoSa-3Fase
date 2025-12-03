@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import FiltersSidebar from '../../components//Filters/FiltersSideBar';
-import ProductGrid from '../../components/Product/ProductGrid';
-import SearchBar from '../../components/Search/SearchBar';
-import Modal from '../../components/Modal/Modal'; 
-import ProductDetails from '../../components/Product/ProductDetail';
+// 1. IMPORTAR O HOOK PARA LER A URL
+import { useSearchParams } from 'react-router-dom';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import FiltersSidebar from '../../components/Filters/FiltersSideBar.jsx';
+import ProductGrid from '../../components/Product/ProductGrid.jsx';
+import SearchBar from '../../components/Search/SearchBar.jsx';
+import ProductDetails from '../../components/Product/ProductDetail.jsx';
+import Modal from '../../components/Modal/Modal.jsx'; 
+
+const API_URL = 'http://localhost:3000';
 
 export default function ShopPage() {
   const [products, setProducts] = useState([]);
@@ -14,9 +17,14 @@ export default function ShopPage() {
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState(null);
   
+  // 2. INICIALIZAR O HOOK
+  const [searchParams] = useSearchParams();
+
+  // 3. ESTADO INICIAL LENDO DA URL
   const [filters, setFilters] = useState({
     search: '',
-    category: 'all',
+    // Se tiver ?category=creatina na URL, usa 'creatina', senão usa 'all'
+    category: searchParams.get('category') || 'all', 
     sort: 'relevance',
   });
 
@@ -84,7 +92,6 @@ export default function ShopPage() {
     setFilters(prev => ({ ...prev, sort: sortValue }));
   };
 
-  // Funções de controle do modal
   const handleOpenModal = (product) => {
     setSelectedProduct(product);
   };
@@ -94,11 +101,9 @@ export default function ShopPage() {
   };
 
   return (
-
     <div className="bg-gray-50 min-h-screen">
       <div className="container mx-auto max-w-7xl px-4 py-8 md:py-12">
         
-        {/* Título */}
         <div className="mb-8 p-6 bg-white rounded-lg shadow-sm border border-gray-200">
           <h1 className="text-4xl font-bold text-green-500">Nossos Produtos</h1>
           <p className="text-lg text-gray-600 mt-2">Encontre os melhores suplementos e alimentos para sua dieta.</p>
@@ -106,7 +111,6 @@ export default function ShopPage() {
         
         <div className="flex flex-col md:flex-row gap-8">
           
-          {/* Sidebar */}
           <aside className="w-full md:w-1/4 lg:w-1/5 md:sticky top-8 h-fit">
             <FiltersSidebar 
               categories={categories}
@@ -115,7 +119,6 @@ export default function ShopPage() {
             />
           </aside>
 
-          {/* Grid Principal */}
           <main className="w-full md:w-3/4 lg:w-4/5">
             <div className="mb-6 flex flex-col md:flex-row justify-between items-center gap-4 p-4 bg-white rounded-lg shadow-sm border border-gray-200">
               <SearchBar onSearch={handleSearch} />
@@ -140,7 +143,11 @@ export default function ShopPage() {
         </div>
       </div>
 
-      <Modal isOpen={!!selectedProduct} onClose={handleCloseModal}>
+      <Modal 
+        isOpen={!!selectedProduct} 
+        onClose={handleCloseModal}
+        // Removi as propriedades maxWidth e padding conforme solicitado
+      >
         {selectedProduct && (
           <ProductDetails 
             product={selectedProduct} 

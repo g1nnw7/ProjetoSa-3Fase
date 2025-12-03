@@ -18,6 +18,7 @@ import CheckoutPage from './pages/Checkout/CheckoutPage.jsx'
 import ProtectedRoute from './routes/adminRoute.jsx'  
 import AdminDashboard from './pages/Admin/AdminDashboard.jsx'
 import AdminRoute from './routes/adminRoute.jsx'
+import OrdersPage from './pages/Orders/OrdersPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -46,7 +47,8 @@ const router = createBrowserRouter([
              children: [
                 { path: "", element: <DashboardPage /> }, 
                 { path: "info", element: <MyInfoPage /> }, 
-                { path: "addresses", element: <AddressesPage /> }
+                { path: "addresses", element: <AddressesPage /> },
+                { path: "orders", element: <OrdersPage /> }
              ]
           },
           {

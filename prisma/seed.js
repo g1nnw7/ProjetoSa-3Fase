@@ -224,14 +224,101 @@ async function main() {
   for (const alim of alimentosData) {
     await prisma.alimento.upsert({
       where: { nome: alim.nome },
-      update: alim, 
+      update: alim,
       create: alim,
     });
   }
   console.log('Alimentos criados com sucesso!');
-  
-  console.log('Script de semente finalizado.');
+
+  // --- 4. POPULAR PEDIDOS ---
+  console.log('🛒 Criando pedidos de teste...');
+
+  // Buscar ou Criar um usuário para receber os pedidos
+  let user = await prisma.usuario.findFirst({ where: { email: "tu@gmail.com" } });
+
+  if (!user) {
+    // Se não tiver usuário, pega o primeiro que encontrar ou cria um
+    user = await prisma.usuario.findFirst();
+
+    if (!user) {
+      console.log('Nenhum usuário encontrado. Criando usuário tu@teste.com...');
+      user = await prisma.usuario.create({
+        data: {
+          nome: "Admin Teste",
+          email: "admin@teste.com",
+          senha: "$2b$10$X7V.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0",
+          role: "ADMIN"
+        }
+      });
+    }
+  }
+
+  const dbProducts = await prisma.product.findMany({ take: 3 });
+
+  if (dbProducts.length >= 2) {
+    const prod1 = dbProducts[0];
+    const prod2 = dbProducts[1];
+
+    // Limpar pedidos anteriores desse usuário para não duplicar infinitamente
+    await prisma.itemPedido.deleteMany({ where: { pedido: { userId: user.id } } });
+    await prisma.pedido.deleteMany({ where: { userId: user.id } });
+
+    // PEDIDO 1: APROVADO (Compra de Whey)
+    await prisma.pedido.create({
+      data: {
+        userId: user.id,
+        status: 'APROVADO',
+        total: (prod1.preco * 2),
+        createdAt: new Date('2023-11-15T10:00:00Z'),
+        items: {
+          create: [
+            { productId: prod1.id, quantidade: 2, precoUnitario: prod1.preco }
+          ]
+        }
+      }
+    });
+
+    // PEDIDO 2: PENDENTE (Compra de Creatina + Pré Treino)
+    await prisma.pedido.create({
+      data: {
+        userId: user.id,
+        status: 'PENDENTE',
+        total: (prod1.preco + prod2.preco),
+        createdAt: new Date(), // Data de hoje
+        items: {
+          create: [
+            { productId: prod1.id, quantidade: 1, precoUnitario: prod1.preco },
+            { productId: prod2.id, quantidade: 1, precoUnitario: prod2.preco }
+          ]
+        }
+      }
+    });
+
+    // PEDIDO 3: NEGADO (Tentativa falha)
+    await prisma.pedido.create({
+      data: {
+        userId: user.id,
+        status: 'NEGADO',
+        total: prod2.preco,
+        createdAt: new Date('2023-11-10T14:30:00Z'),
+        items: {
+          create: [
+            { productId: prod2.id, quantidade: 1, precoUnitario: prod2.preco }
+          ]
+        }
+      }
+    });
+
+    console.log(`✅ 3 Pedidos criados para o usuário: ${user.email}`);
+  } else {
+    console.log('⚠️ Não há produtos suficientes para criar pedidos.');
+  }
+
+  console.log('✅ Script de semente finalizado com sucesso!');
+
 }
+
+
 
 main()
   .catch((e) => {

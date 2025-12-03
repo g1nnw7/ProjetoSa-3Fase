@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-
+import { useNavigate } from "react-router-dom";
 
 function ProductCarousel() {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
   function RigthIcon() {
     return (
@@ -23,19 +23,13 @@ function ProductCarousel() {
     );
   }
 
-
-
-
   useEffect(() => {
     async function loadProducts() {
       try {
         const response = await fetch("http://localhost:3000/products");
         const data = await response.json();
 
-        // ➜ Sua API retorna 1 objeto ou vários? 
-        // Caso seja apenas 1 objeto, transformo em array:
         const arr = Array.isArray(data) ? data : [data];
-
         setProducts(arr);
       } catch (error) {
         console.log("Erro ao carregar produtos:", error);
@@ -45,10 +39,18 @@ function ProductCarousel() {
     loadProducts();
   }, []);
 
-  // SETAS PERSONALIZADAS
+  const handleViewProduct = (categorySlug) => {
+    if (categorySlug) {
+        navigate(`/loja?category=${categorySlug}`);
+    } else {
+        navigate('/loja');
+    }
+  };
+
+
   const NextArrow = ({ onClick }) => (
     <button
-      className="absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-white shadow-lg w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 "
+      className="absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-white shadow-lg w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 cursor-pointer"
       onClick={onClick}
     >
       <RigthIcon />
@@ -57,7 +59,7 @@ function ProductCarousel() {
 
   const PrevArrow = ({ onClick }) => (
     <button
-      className="absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-white shadow-lg w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100"
+      className="absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-white shadow-lg w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 cursor-pointer"
       onClick={onClick}
     >
       <LeftIcon />
@@ -87,37 +89,46 @@ function ProductCarousel() {
 
   return (
     <div className="w-full py-10 relative px-8 bg-gray-50">
-      <h1 className="text-[3rem] text-center mb-6 text-[#000000] font-[Poppins]">Conheça nossos produtos!</h1>
-      <Slider {...settings}>
-        {products.map((product) => (
-          <div key={product.id} className="px-4">
-            <div
-              className="bg-white font-[Poppins] shadow rounded-2xl m-6 p-6 h-100 w-125 text-center transition-all duration-500 
-              transform hover:scale-105 hover:shadow-xl "
-            >
-              <img
-                src={`/${product.imageUrl.replace("public/", "")}`}
-                alt={product.nome}
-                className="w-40 h-40 mx-auto object-contain"
-              />
+      <h1 className="text-[3rem] text-center mb-6 text-green-700 font-[Poppins]">Conheça nossos produtos!</h1>
+      
+      {products.length > 0 ? (
+        <Slider {...settings}>
+            {products.map((product) => (
+            <div key={product.id} className="px-4">
+                <div
+                className="bg-white font-[Poppins] shadow rounded-2xl m-6 p-6 h-100 w-125 text-center transition-all duration-500 
+                transform hover:scale-105 hover:shadow-xl "
+                >
+                <img
+                    src={`/${product.imageUrl.replace("public/", "")}`}
+                    alt={product.nome}
+                    className="w-40 h-40 mx-auto object-contain"
+                    onError={(e) => { e.target.src = 'https://placehold.co/200x200?text=Produto'; }}
+                />
 
-              <h3 className="text-lg font-[Poppins]  mt-4">{product.nome}</h3>
+                <h3 className="text-lg font-[Poppins] mt-4">{product.nome}</h3>
 
-              <p className="text-gray-500 text-sm mt-1">
-                {product.descricao}
-              </p>
+                <p className="text-gray-500 text-sm mt-1 line-clamp-2 h-10 overflow-hidden">
+                    {product.descricao}
+                </p>
 
-              <p className="text-green-600 font-[Poppins] text-xl mt-3">
-                R$ {product.preco.toFixed(2)}
-              </p>
+                <p className="text-green-600 font-[Poppins] text-xl mt-3">
+                    R$ {product.preco.toFixed(2)}
+                </p>
 
-              <button className="mt-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">
-                Ver Produto
-              </button>
+                <button 
+                    onClick={() => handleViewProduct(product.category?.slug)}
+                    className="mt-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg cursor-pointer"
+                >
+                    Ver Produto
+                </button>
+                </div>
             </div>
-          </div>
-        ))}
-      </Slider>
+            ))}
+        </Slider>
+      ) : (
+          <p className="text-center text-gray-500">Carregando produtos...</p>
+      )}
     </div>
   );
 }

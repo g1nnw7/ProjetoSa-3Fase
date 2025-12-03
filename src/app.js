@@ -25,7 +25,5 @@ app.use(auth);
 // ROTAS PRIVADAS (Com Login)
 
 app.use(usuarioRouter); 
-
 app.use("/enderecos", addressRouter);
-
 app.use("/payment", paymentRouter);

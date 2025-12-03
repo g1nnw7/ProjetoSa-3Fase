@@ -59,7 +59,7 @@ export default function DashboardPage() {
             icon={<ArchiveBoxIcon />}
             title="Meus Pedidos"
             description="Ver o histórico dos seus pedidos"
-            onClick={() => alert('Algum acefalo cria pagina de historico de pedidos')}
+            onClick={() => navigate('/dashboard/orders')}
           />
           
           <DashboardCard
