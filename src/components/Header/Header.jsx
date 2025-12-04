@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../../contexts/CartContext.jsx'; 
 import CartSidebar from '../Cart/CartSidebar.jsx';     
 import { useAuth } from '../../contexts/AuthContext.jsx'; 
 import { toast } from 'react-toastify';
 
+// --- Ícones ---
 function ShoppingBagIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -28,21 +29,38 @@ function LogoutIcon() {
     </svg> 
   ); 
 }
+
 function AdminIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 ">
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12c5.16-1.26 9-6.45 9-12V5Zm0 3.9a3 3 0 1 1-3 3a3 3 0 0 1 3-3Zm0 7.9c2 0 6 1.09 6 3.08a7.2 7.2 0 0 1-12 0c0-1.99 4-3.08 6-3.08Z" />
     </svg>
   );
-
 }
 
-
+// --- Componente Header ---
 function Header({ openRegisterModal }) {
   const navigate = useNavigate();
   const { user, logout } = useAuth(); 
   const { totalItems } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
+  
+  // Estado para controlar se a página foi rolada
+  const [scrolled, setScrolled] = useState(false);
+
+  // useEffect para adicionar o event listener de scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      // Se rolar mais que 10px, considera como "scrolled"
+      const isScrolled = window.scrollY > 10;
+      setScrolled(isScrolled);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const handleLogout = () => {
     logout(); 
@@ -55,7 +73,13 @@ function Header({ openRegisterModal }) {
 
   return (
     <>
-      <div className="relative z-10 bg-gray-50 backdrop-blur-md px-6 py-4 flex items-center justify-between font-[Poppins]">
+      <div 
+        className={`fixed top-0 left-0 w-full z-50 px-6 py-4 flex items-center justify-between font-[Poppins] transition-all duration-300 ease-in-out
+          ${scrolled 
+            ? 'bg-gray-50 shadow-md backdrop-blur-md' // Estilo Rolando: Fundo Sólido
+            : 'bg-transparent' // Estilo Topo: Transparente
+          }`}
+      >
         
         <Link to="/">
           <img
@@ -71,13 +95,13 @@ function Header({ openRegisterModal }) {
             <>
               <button
                 onClick={() => navigate('/login')}
-                className="bg-[#FEFEFC] hover:bg-green-600/40 px-4 py-2 text-[14px] font-[500] rounded-[6px] cursor-pointer transition-all duration-300 ease-in-out"
+                className="bg-[#FEFEFC] hover:bg-green-600/40 px-4 py-2 text-[14px] font-[500] rounded-[6px] cursor-pointer transition-all duration-300 ease-in-out shadow-sm"
               >
                 Login
               </button>
               <button
                 onClick={openRegisterModal}
-                className="bg-[#FEFEFC] hover:bg-green-600/40 px-4 py-2 text-[14px] font-[500] rounded-[6px] cursor-pointer transition-all duration-300 ease-in-out"
+                className="bg-[#FEFEFC] hover:bg-green-600/40 px-4 py-2 text-[14px] font-[500] rounded-[6px] cursor-pointer transition-all duration-300 ease-in-out shadow-sm"
               >
                 Cadastro
               </button>
@@ -86,14 +110,23 @@ function Header({ openRegisterModal }) {
 
           {user && (
             <>
-              <span className="hidden sm:flex text-lg text-gray-700 font-medium items-center">
+              {/* LÓGICA DO TEXTO DE BEM-VINDO */}
+              <span 
+                className={`hidden sm:flex text-lg font-medium items-center transition-all duration-300 ease-in-out
+                  ${scrolled 
+                    ? 'text-gray-700' // Rolando: Texto simples
+                    : 'text-gray-800 bg-white/80 backdrop-blur-md px-4 py-2 rounded-full shadow-sm mx-2' // Topo: Fundo branco translúcido (pílula)
+                  }`
+                }
+              >
                 Bem-vindo,&nbsp;
                 <span className="text-[#6cc24a] font-semibold">{user.nome}</span>
               </span>
+              
               {user.role === 'ADMIN' && (
                 <button
                   onClick={() => navigate('/admin')}
-                  className="relative p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-full transition-colors cursor-pointer"
+                  className="relative p-2 bg-white/80 hover:bg-blue-50 text-blue-600 hover:text-blue-800 rounded-full transition-colors cursor-pointer shadow-sm"
                   title="Painel Administrativo"
                 >
                   <AdminIcon />
@@ -102,7 +135,7 @@ function Header({ openRegisterModal }) {
 
               <button
                 onClick={() => navigate('/dashboard')} 
-                className="relative p-2 text-gray-600 hover:text-green-600 transition-colors rounded-full hover:bg-gray-100 cursor-pointer"
+                className="relative p-2 bg-white/80 hover:bg-gray-100 text-gray-600 hover:text-green-600 transition-colors rounded-full cursor-pointer shadow-sm"
                 aria-label="Minha Conta"
               >
                 <UserIcon />
@@ -110,16 +143,17 @@ function Header({ openRegisterModal }) {
 
               <button
                 onClick={handleLogout}
-                className="relative p-2 text-gray-600 hover:text-red-600 transition-colors rounded-full hover:bg-red-100 cursor-pointer"
+                className="relative p-2 bg-white/80 hover:bg-red-100 text-gray-600 hover:text-red-600 transition-colors rounded-full cursor-pointer shadow-sm"
                 aria-label="Sair"
               >
                 <LogoutIcon/>
               </button>
             </>
           )}
+
           <button
             onClick={() => setIsCartOpen(true)}
-            className="relative p-2 text-gray-600 hover:text-green-600 transition-colors rounded-full hover:bg-gray-100 cursor-pointer"
+            className="relative p-2 bg-white/80 hover:bg-gray-100 text-gray-600 hover:text-green-600 transition-colors rounded-full cursor-pointer shadow-sm"
             aria-label="Abrir carrinho"
           >
             <ShoppingBagIcon />

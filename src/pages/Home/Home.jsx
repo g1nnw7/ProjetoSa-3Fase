@@ -28,7 +28,7 @@ function Home() {
         buttonText="Comece Agora"
         imageSrc="/img/acad.jpg"
         url="/calculadora"
-        rowReverse
+        
       />
       <Section
         title="Nossos produtos"
