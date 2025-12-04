@@ -10,6 +10,7 @@ import shippingRouter from "./routes/shippingRoutes.js";
 import addressRouter from "./routes/adressRoutes.js";
 import alimentoRouter from "./routes/alimentos.js";
 import paymentRouter from "./routes/paymentRoutes.js";
+import orderRouter from './routes/orderRoutes.js';
 
 export const app = express();
 
@@ -27,3 +28,4 @@ app.use(auth);
 app.use(usuarioRouter); 
 app.use("/enderecos", addressRouter);
 app.use("/payment", paymentRouter);
+app.use("/orders", orderRouter);

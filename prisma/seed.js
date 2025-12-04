@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-// Dados das Categorias
+// --- DADOS DA LOJA (CATEGORIAS) ---
 const categoriesData = [
   { nome: 'Whey Protein', slug: 'whey-protein' },
   { nome: 'Creatina', slug: 'creatina' },
@@ -10,7 +10,8 @@ const categoriesData = [
   { nome: 'Moda', slug: 'moda' },
 ];
 
-// Dados dos Produtos de Exemplo
+// --- DADOS DA LOJA (PRODUTOS) ---
+// CORREÇÃO: Removido 'public' do início dos caminhos das imagens
 const productsData = [
   // --- Whey Protein ---
   {
@@ -18,7 +19,7 @@ const productsData = [
     slug: 'whey-100-concentrado-900g',
     descricao: 'Proteína concentrada do soro do leite de alta qualidade, ideal para ganho de massa muscular. Sabor baunilha.',
     preco: 129.90,
-    imageUrl: 'public/img/wheyConcentreado900g.png',
+    imageUrl: '/img/wheyConcentreado900g.png', // <--- CORRIGIDO
     estoque: 50,
     proteinas: 25,
     isGlutenFree: true,
@@ -42,7 +43,7 @@ const productsData = [
     slug: 'creatina-monohidratada-250g',
     descricao: 'Aumente sua força e explosão nos treinos com a creatina monohidratada 100% pura.',
     preco: 89.90,
-    imageUrl: 'public/img/creatina-monohidratada.png',
+    imageUrl: '/img/creatina-monohidratada.png', // <--- CORRIGIDO
     estoque: 100,
     isVegano: true,
     categorySlug: 'creatina',
@@ -52,7 +53,7 @@ const productsData = [
     slug: 'creatina-micronizada-150g',
     descricao: 'Fácil diluição e absorção otimizada. A creatina micronizada leva seus treinos a outro nível.',
     preco: 69.90,
-    imageUrl: 'public/img/creatina-micronizada.png',
+    imageUrl: '/img/creatina-micronizada.png', // <--- CORRIGIDO
     estoque: 70,
     categorySlug: 'creatina',
   },
@@ -63,7 +64,7 @@ const productsData = [
     slug: 'pre-treino-egide-frutas',
     descricao: 'Foco, energia e vasodilatação. Prepare-se para treinos mais intensos.',
     preco: 119.90,
-    imageUrl: 'public/img/pre-frutas-vermelhas.png',
+    imageUrl: '/img/pre-frutas-vermelhas.png', // <--- CORRIGIDO
     estoque: 40,
     calorias: 5,
     categorySlug: 'pre-treino',
@@ -73,7 +74,7 @@ const productsData = [
     slug: 'pre-treino-horus-maca',
     descricao: 'A fórmula Hórus foi desenvolvida para quem busca performance extrema. Contém cafeína e beta-alanina.',
     preco: 109.90,
-    imageUrl: 'public/img/pre-treino.png',
+    imageUrl: '/img/pre-treino.png', // <--- CORRIGIDO
     estoque: 35,
     calorias: 10,
     categorySlug: 'pre-treino',
@@ -85,7 +86,7 @@ const productsData = [
     slug: 'coqueteleira-600ml-preta',
     descricao: 'Praticidade para misturar seus suplementos. Com marcações de ML e mola misturadora.',
     preco: 29.90,
-    imageUrl: 'public/img/coqueteleira.png',
+    imageUrl: '/img/coqueteleira.png', // <--- CORRIGIDO
     estoque: 200,
     categorySlug: 'acessorios',
   },
@@ -94,7 +95,7 @@ const productsData = [
     slug: 'galao-agua-2l-rosa',
     descricao: 'Mantenha-se hidratado durante todo o dia com estilo. Plástico resistente e livre de BPA.',
     preco: 45.00,
-    imageUrl: 'public/img/galao.png',
+    imageUrl: '/img/galao.png', // <--- CORRIGIDO
     estoque: 80,
     categorySlug: 'acessorios',
   },
@@ -105,7 +106,7 @@ const productsData = [
     slug: 'camiseta-dry-fit-preta',
     descricao: 'Conforto e tecnologia para seus treinos. Tecido leve que absorve o suor.',
     preco: 79.90,
-    imageUrl: 'public/img/camiseta.png',
+    imageUrl: '/img/camiseta.png', // <--- CORRIGIDO
     estoque: 50,
     categorySlug: 'moda',
   },
@@ -114,12 +115,13 @@ const productsData = [
     slug: 'legging-treino-grafite',
     descricao: 'Alta compressão e zero transparência. Perfeita para agachamentos e corridas.',
     preco: 119.90,
-    imageUrl: 'public/img/leggin.png',
+    imageUrl: '/img/leggin.png', // <--- CORRIGIDO
     estoque: 40,
     categorySlug: 'moda',
   },
 ];
 
+// --- DADOS DA CALCULADORA (ALIMENTOS) ---
 const alimentosData = [
   { nome: 'Arroz integral', gramas: 100, calorias: 130, proteinas: 2.6, carboidratos: 28, gorduras: 1.0 },
   { nome: 'Feijão carioca', gramas: 100, calorias: 76, proteinas: 5.0, carboidratos: 13, gorduras: 0.6 },
@@ -195,6 +197,8 @@ const alimentosData = [
 
 async function main() {
   console.log('Iniciando o script de semente...');
+
+  // 1. Criar Categorias
   console.log('Criando categorias da loja...');
   for (const cat of categoriesData) {
     await prisma.category.upsert({
@@ -204,6 +208,8 @@ async function main() {
     });
   }
   console.log('Categorias criadas!');
+
+  // 2. Criar Produtos
   console.log('Criando produtos da loja...');
   for (const prod of productsData) {
     const { categorySlug, ...productData } = prod;
@@ -220,6 +226,8 @@ async function main() {
     });
   }
   console.log('Produtos criados!');
+
+  // 3. Criar Alimentos
   console.log('Criando alimentos da calculadora...');
   for (const alim of alimentosData) {
     await prisma.alimento.upsert({
@@ -233,92 +241,89 @@ async function main() {
   // --- 4. POPULAR PEDIDOS ---
   console.log('🛒 Criando pedidos de teste...');
 
-  // Buscar ou Criar um usuário para receber os pedidos
+  // Tenta buscar o usuário "tu@gmail.com"
   let user = await prisma.usuario.findFirst({ where: { email: "tu@gmail.com" } });
 
   if (!user) {
-    // Se não tiver usuário, pega o primeiro que encontrar ou cria um
+    // Se não encontrar o seu, tenta um genérico ou cria um novo
     user = await prisma.usuario.findFirst();
-
     if (!user) {
-      console.log('Nenhum usuário encontrado. Criando usuário tu@teste.com...');
-      user = await prisma.usuario.create({
-        data: {
-          nome: "Admin Teste",
-          email: "admin@teste.com",
-          senha: "$2b$10$X7V.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0",
-          role: "ADMIN"
-        }
-      });
+       console.log('Nenhum usuário encontrado. Criando usuário admin@teste.com...');
+       user = await prisma.usuario.create({
+           data: {
+               nome: "Admin Teste",
+               email: "admin@teste.com",
+               senha: "$2b$10$X7V.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0", // Hash genérico
+               role: "ADMIN"
+           }
+       });
     }
   }
 
+  // Buscar produtos reais do banco para usar nos pedidos
   const dbProducts = await prisma.product.findMany({ take: 3 });
 
   if (dbProducts.length >= 2) {
-    const prod1 = dbProducts[0];
-    const prod2 = dbProducts[1];
+      const prod1 = dbProducts[0];
+      const prod2 = dbProducts[1];
 
-    // Limpar pedidos anteriores desse usuário para não duplicar infinitamente
-    await prisma.itemPedido.deleteMany({ where: { pedido: { userId: user.id } } });
-    await prisma.pedido.deleteMany({ where: { userId: user.id } });
+      // Limpar pedidos anteriores desse usuário para evitar duplicação infinita
+      await prisma.itemPedido.deleteMany({ where: { pedido: { userId: user.id } } });
+      await prisma.pedido.deleteMany({ where: { userId: user.id } });
 
-    // PEDIDO 1: APROVADO (Compra de Whey)
-    await prisma.pedido.create({
-      data: {
-        userId: user.id,
-        status: 'APROVADO',
-        total: (prod1.preco * 2),
-        createdAt: new Date('2023-11-15T10:00:00Z'),
-        items: {
-          create: [
-            { productId: prod1.id, quantidade: 2, precoUnitario: prod1.preco }
-          ]
-        }
-      }
-    });
+      // PEDIDO 1: APROVADO
+      await prisma.pedido.create({
+          data: {
+              userId: user.id,
+              status: 'APROVADO',
+              total: (prod1.preco * 2),
+              createdAt: new Date('2023-11-15T10:00:00Z'),
+              items: {
+                  create: [
+                      { productId: prod1.id, quantidade: 2, precoUnitario: prod1.preco }
+                  ]
+              }
+          }
+      });
 
-    // PEDIDO 2: PENDENTE (Compra de Creatina + Pré Treino)
-    await prisma.pedido.create({
-      data: {
-        userId: user.id,
-        status: 'PENDENTE',
-        total: (prod1.preco + prod2.preco),
-        createdAt: new Date(), // Data de hoje
-        items: {
-          create: [
-            { productId: prod1.id, quantidade: 1, precoUnitario: prod1.preco },
-            { productId: prod2.id, quantidade: 1, precoUnitario: prod2.preco }
-          ]
-        }
-      }
-    });
+      // PEDIDO 2: PENDENTE
+      await prisma.pedido.create({
+          data: {
+              userId: user.id,
+              status: 'PENDENTE',
+              total: (prod1.preco + prod2.preco),
+              createdAt: new Date(), // Data de hoje
+              items: {
+                  create: [
+                      { productId: prod1.id, quantidade: 1, precoUnitario: prod1.preco },
+                      { productId: prod2.id, quantidade: 1, precoUnitario: prod2.preco }
+                  ]
+              }
+          }
+      });
 
-    // PEDIDO 3: NEGADO (Tentativa falha)
-    await prisma.pedido.create({
-      data: {
-        userId: user.id,
-        status: 'NEGADO',
-        total: prod2.preco,
-        createdAt: new Date('2023-11-10T14:30:00Z'),
-        items: {
-          create: [
-            { productId: prod2.id, quantidade: 1, precoUnitario: prod2.preco }
-          ]
-        }
-      }
-    });
+      // PEDIDO 3: NEGADO
+      await prisma.pedido.create({
+          data: {
+              userId: user.id,
+              status: 'NEGADO',
+              total: prod2.preco,
+              createdAt: new Date('2023-11-10T14:30:00Z'),
+              items: {
+                  create: [
+                      { productId: prod2.id, quantidade: 1, precoUnitario: prod2.preco }
+                  ]
+              }
+          }
+      });
 
-    console.log(`✅ 3 Pedidos criados para o usuário: ${user.email}`);
+      console.log(`✅ 3 Pedidos criados para o usuário: ${user.email}`);
   } else {
-    console.log('⚠️ Não há produtos suficientes para criar pedidos.');
+      console.log('⚠️ Não há produtos suficientes no banco para criar pedidos de teste.');
   }
-
+  
   console.log('✅ Script de semente finalizado com sucesso!');
-
 }
-
-
 
 main()
   .catch((e) => {
