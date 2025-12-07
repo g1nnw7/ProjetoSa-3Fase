@@ -11,6 +11,9 @@ import addressRouter from "./routes/adressRoutes.js";
 import alimentoRouter from "./routes/alimentos.js";
 import paymentRouter from "./routes/paymentRoutes.js";
 import orderRouter from './routes/orderRoutes.js';
+import planoRouter from './routes/planoRoutes.js';
+import myplanRouter from './routes/myplanRoutes.js';
+import quizRouter from './routes/quizRoutes.js';
 
 export const app = express();
 
@@ -21,6 +24,9 @@ app.use(productRouter);
 app.use(categoryRouter); 
 app.use("/shipping", shippingRouter); 
 app.use("/alimentos", alimentoRouter); 
+app.use('/quiz', quizRouter);
+app.use('/quiz/plano', planoRouter);
+app.use('/historico-plano', myplanRouter);
 app.use(auth);
 
 // ROTAS PRIVADAS (Com Login)

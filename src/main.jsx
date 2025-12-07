@@ -19,6 +19,9 @@ import ProtectedRoute from './routes/adminRoute.jsx'
 import AdminDashboard from './pages/Admin/AdminDashboard.jsx'
 import AdminRoute from './routes/adminRoute.jsx'
 import OrdersPage from './pages/Orders/OrdersPage.jsx'
+import Quiz from './pages/Quiz/Quiz.jsx'
+import Plano from './pages/Plano/Plano.jsx'
+import Myplan from './pages/MyPlan/MyPlan.jsx'
 
 const router = createBrowserRouter([
   {
@@ -37,6 +40,14 @@ const router = createBrowserRouter([
         path: "calculadora", 
         element: <MacroCalculadora />,
       },
+       {
+        path: "quiz", 
+        element: <Quiz />,
+      },
+       {
+        path: "plano", 
+        element: <Plano />,
+      },
       
       {
         element: <ProtectedRoute />,
@@ -48,7 +59,8 @@ const router = createBrowserRouter([
                 { path: "", element: <DashboardPage /> }, 
                 { path: "info", element: <MyInfoPage /> }, 
                 { path: "addresses", element: <AddressesPage /> },
-                { path: "orders", element: <OrdersPage /> }
+                { path: "orders", element: <OrdersPage /> },
+                 { path: "myplan", element: <Myplan /> }
              ]
           },
           {
