@@ -64,7 +64,7 @@ const Section = ({
 
         <button
           onClick={handleClick}
-          className="px-12 py-4 bg-green-600 hover:bg-green-700 text-white rounded-xl shadow-lg transition-all duration-300 hover:scale-[1.05] font-[Poppins] text-lg"
+          className="px-12 py-4 bg-green-600 hover:bg-green-700 text-white rounded-xl shadow-lg transition-all duration-300 hover:scale-[1.05] font-[Poppins] text-lg cursor-pointer"
         >
           {buttonText}
         </button>

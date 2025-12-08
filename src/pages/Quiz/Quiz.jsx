@@ -627,7 +627,7 @@ const gerarPlano = async () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100 flex items-center justify-center p-4 font-[Poppins]">
+    <div className="min-h-screen  from-green-50 to-green-100 flex items-center justify-center p-4 font-[Poppins]">
       <div className="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-8 md:p-10 relative overflow-hidden">
 
         {/* Barra de progresso */}
@@ -652,7 +652,7 @@ const gerarPlano = async () => {
                 <img
                   src="/img/logo.png"
                   alt="Logo"
-                  className="cursor-pointer h-50 object-contain"
+                  className="cursor-pointer h-20 object-contain"
                 />
               </div>
 

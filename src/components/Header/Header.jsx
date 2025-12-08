@@ -70,7 +70,7 @@ function Header({ openRegisterModal }) {
   }
 
   const headerBackgroundClass = scrolled || !isHome
-    ? 'bg-gray-50 shadow-md backdrop-blur-md' 
+    ? 'bg-white backdrop-blur-md' 
     : 'bg-transparent'; 
 
   return (
