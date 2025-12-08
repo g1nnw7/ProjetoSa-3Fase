@@ -22,6 +22,7 @@ import OrdersPage from './pages/Orders/OrdersPage.jsx'
 import Quiz from './pages/Quiz/Quiz.jsx'
 import Plano from './pages/Plano/Plano.jsx'
 import Myplan from './pages/MyPlan/MyPlan.jsx'
+import DevReceita from './pages/DevReceita/DevReceita.jsx'
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
        {
         path: "quiz", 
         element: <Quiz />,
+      },
+      {
+        path: "devreceitas", 
+        element: <DevReceita />,
       },
        {
         path: "plano", 

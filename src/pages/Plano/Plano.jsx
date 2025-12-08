@@ -207,7 +207,7 @@ function Plano() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100 p-4 md:p-6">
+    <div className="min-h-screen bg-linear-to-b from-green-50 to-green-100 p-4 md:p-6">
       <div className="max-w-6xl mx-auto">
         
         {/* Cabeçalho */}
@@ -395,7 +395,7 @@ function Plano() {
               {/* Nota do nutricionista */}
               <div className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-100">
                 <div className="flex items-start">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600 mr-3 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <div>
@@ -580,7 +580,7 @@ function Plano() {
                 </button>
                 
                 <button
-                  onClick={() => navigate('/dashboard/receitas')}
+                  onClick={() => navigate('/devreceitas')}
                   className="w-full flex items-center justify-center p-3 bg-yellow-50 text-yellow-700 rounded-lg hover:bg-yellow-100 transition transform hover:translate-x-1"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -603,7 +603,7 @@ function Plano() {
                     key={index} 
                     className="flex items-start p-3 bg-green-50 rounded-lg hover:bg-green-100 transition"
                   >
-                    <CheckIcon className="w-5 h-5 text-green-600 mr-3 flex-shrink-0 mt-0.5" />
+                    <CheckIcon className="w-5 h-5 text-green-600 mr-3 shrink-0 mt-0.5" />
                     <span className="text-gray-700">{recomendacao}</span>
                   </div>
                 ))}
