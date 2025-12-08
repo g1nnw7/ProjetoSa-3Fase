@@ -100,7 +100,7 @@ export default function CartSidebar({ isOpen, onClose }) {
         setDiscount(discountValue);
         setAppliedCoupon(code);
         setCouponMessage({ type: 'success', text: 'Cupom de 10% aplicado!' });
-    } else if (code === '1COMPRA') {
+    } else if (code === 'NUTRI20') {
         const discountValue = 20.00; 
         setDiscount(discountValue);
         setAppliedCoupon(code);

@@ -223,7 +223,7 @@ function Plano() {
             <div className="flex gap-3">
               <button
                 onClick={() => navigate('/dashboard')}
-                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition flex items-center"
+                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition flex items-center cursor-pointer"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -233,7 +233,7 @@ function Plano() {
               
               <button
                 onClick={() => navigate('/quiz')}
-                className="px-4 py-2 bg-green-100 text-green-700 rounded-lg font-medium hover:bg-green-200 transition flex items-center"
+                className="px-4 py-2 bg-green-100 text-green-700 rounded-lg font-medium hover:bg-green-200 transition flex items-center cursor-pointer"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -297,7 +297,7 @@ function Plano() {
                 <button
                   key={dia}
                   onClick={() => setDiaAtual(index)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                  className={`px-4 py-2 rounded-lg font-medium transition-all cursor-pointer ${
                     diaAtual === index
                       ? 'bg-green-600 text-white shadow-md transform scale-105'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -380,8 +380,8 @@ function Plano() {
                           onClick={() => marcarRefeicaoConcluida(key)}
                           className={`ml-4 p-2 rounded-full transition ${
                             concluida
-                              ? 'bg-green-100 text-green-600 hover:bg-green-200'
-                              : 'bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-green-600'
+                              ? 'bg-green-100 text-green-600 hover:bg-green-200 cursor-pointer'
+                              : 'bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-green-600 cursor-pointer'
                           }`}
                         >
                           <CheckIcon className="w-6 h-6" />
@@ -553,7 +553,7 @@ function Plano() {
               <div className="space-y-3">
                 <button
                   onClick={imprimirPlano}
-                  className="w-full flex items-center justify-center p-3 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition transform hover:translate-x-1"
+                  className="w-full flex items-center justify-center p-3 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition transform hover:translate-x-1 cursor-pointer"
                 >
                   <PrinterIcon className="w-5 h-5 mr-3" />
                   Imprimir Plano
@@ -561,7 +561,7 @@ function Plano() {
                 
                 <button
                   onClick={exportarPlano}
-                  className="w-full flex items-center justify-center p-3 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition transform hover:translate-x-1"
+                  className="w-full flex items-center justify-center p-3 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition transform hover:translate-x-1 cursor-pointer"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -571,7 +571,7 @@ function Plano() {
                 
                 <button
                   onClick={compartilharPlano}
-                  className="w-full flex items-center justify-center p-3 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition transform hover:translate-x-1"
+                  className="w-full flex items-center justify-center p-3 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition transform hover:translate-x-1 cursor-pointer"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
@@ -581,7 +581,7 @@ function Plano() {
                 
                 <button
                   onClick={() => navigate('/devreceitas')}
-                  className="w-full flex items-center justify-center p-3 bg-yellow-50 text-yellow-700 rounded-lg hover:bg-yellow-100 transition transform hover:translate-x-1"
+                  className="cursor-pointer w-full flex items-center justify-center p-3 bg-yellow-50 text-yellow-700 rounded-lg hover:bg-yellow-100 transition transform hover:translate-x-1"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
@@ -666,7 +666,7 @@ function Plano() {
                       setProgresso(0);
                       toast.success('Progresso resetado!');
                     }}
-                    className="text-sm text-gray-500 hover:text-red-600 transition"
+                    className="text-sm text-gray-500 hover:text-red-600 transition cursor-pointer"
                   >
                     Reiniciar progresso da semana
                   </button>

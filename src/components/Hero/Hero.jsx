@@ -8,8 +8,8 @@ import Slider from 'react-slick';
 
 const images = [
   '/img/fundohero.png', 
-  '/img/Promos.png', 
-  '/img/wheyConcentreado900g.png', 
+  '/img/Promo.png', 
+  '/img/fundohero2.png', 
 ];
 
 const Hero = () => {
@@ -77,7 +77,7 @@ const Hero = () => {
     >
       <Slider {...settings} className="h-full w-full">
         {images.map((url, index) => (
-          <div key={index} className="outline-none border-none">
+          <div key={index} className="outline-none border-none h-full">
             <div
               className='h-screen w-full bg-cover bg-center bg-no-repeat'
               style={{ 
