@@ -52,14 +52,29 @@ const onEnviarMensagem = async (mensagem) => {
 }
 
   return (
-    <div className= "min-h-screen bg-linear-to-br from-purple-200 via-gray-50 to-emerald-50">
-        <div className="container mx-auto max-w-4xl">
-            <header className='text-center mb-8'>
-                <h1 className='text-5xl font-bold bg-linear-to-r from-purple-600 to-emerald-600 text-transparent bg-clip-text'>🍳 Nutri IA</h1>
-                <p className='text-gray-600 text-lg'>Seu assistente pessoal para receitas deliciosas</p>
+    <div className="min-h-screen bg-linear-to-b from-green-50 to-green-100 p-4 md:p-6">
+        <div className="max-w-4xl mx-auto">
+            
+            {/* Cabeçalho Ajustado: Margem inferior reduzida (mb-4) e padding reduzido */}
+            <header className='flex flex-col items-center justify-center mb-4 pt-2'>
+                
+                {/* Título: Tamanho levemente reduzido para proporção */}
+                <h1 className='text-3xl md:text-4xl font-extrabold tracking-tight text-gray-800 mb-2'>
+                    Nutri
+                    <span className="bg-clip-text text-transparent bg-linear-to-r from-green-600 to-emerald-500 ml-2">
+                        IA
+                    </span>
+                </h1>
+                
+                {/* Subtítulo */}
+                <div className="flex items-center gap-2 text-gray-500 font-medium bg-white/50 px-3 py-1 rounded-full border border-green-50/50">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                    <p className='text-xs md:text-sm'>Assistente de Culinária Inteligente</p>
+                </div>
             </header>
 
-            <div className='bg-white/70 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl h-[600px] border border-gray-100 flex flex-col'>
+            {/* Altura reduzida de 600px para 500px para ficar mais compacto */}
+            <div className='bg-white rounded-2xl shadow-lg border border-green-100 overflow-hidden h-[500px] flex flex-col'>
                 < ListaMensagens mensagens={mensagens} loading={loading}/>
                 < ChatBox onEnviarMensagem={onEnviarMensagem} desabilitado={loading}/>
             </div>

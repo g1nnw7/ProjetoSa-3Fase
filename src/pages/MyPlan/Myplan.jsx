@@ -22,16 +22,23 @@ function Myplan() {
   }, [user, navigate]);
 
   const carregarDados = async () => {
-    try {
-      setLoading(true);
-      const token = localStorage.getItem('accessToken');
-      
-      if (!token) throw new Error('Sem token');
+    try {
+     setLoading(true);
+      
+      // 1. Pega do localStorage
+      let token = localStorage.getItem('accessToken');
+      
+      if (!token) throw new Error('Sem token');
 
-      // Busca do Backend (Fonte da Verdade)
-      const response = await axios.get('http://localhost:3000/api/dashboard/myplan', {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
+      // --- CORREÇÃO AQUI ---
+      // Remove todas as aspas duplas (") que estiverem sobrando
+      token = token.replace(/"/g, ''); 
+      // ---------------------
+
+      // Busca do Backend
+      const response = await axios.get('http://localhost:3000/api/dashboard/myplan', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       
       const planos = response.data || [];
       
@@ -169,7 +176,7 @@ function Myplan() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100 flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-b from-green-50 to-green-100 flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
           <p className="mt-4 text-gray-600 font-medium">Sincronizando seus dados...</p>
@@ -185,7 +192,7 @@ function Myplan() {
     : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100 p-4 md:p-6">
+    <div className="min-h-screen bg-linear-to-b from-green-50 to-green-100 p-4 md:p-6">
       <div className="max-w-6xl mx-auto">
         
         {/* Cabeçalho */}

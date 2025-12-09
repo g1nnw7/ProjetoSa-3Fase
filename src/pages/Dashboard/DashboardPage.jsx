@@ -21,7 +21,7 @@ function DashboardCard({ icon, title, description, onClick }) {
                  flex items-center space-x-6 hover:shadow-lg 
                  hover:border-green-300 transition-all duration-300 cursor-pointer"
     >
-      <div className="flex-shrink-0 bg-green-100 p-4 rounded-full">
+      <div className="shrink-0 bg-green-100 p-4 rounded-full">
         {icon}
       </div>
       <div>
@@ -74,6 +74,13 @@ export default function DashboardPage() {
             title="Endereços"
             description="Gerir os seus endereços de entrega"
             onClick={() => navigate('/dashboard/addresses')}
+          />
+
+          <DashboardCard
+            icon={<MapPinIcon />}
+            title="Planos"
+            description="Seu histórico de planos alimentares"
+            onClick={() => navigate('/dashboard/myplan')}
           />
 
         </div>

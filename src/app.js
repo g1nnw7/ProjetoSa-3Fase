@@ -26,7 +26,7 @@ app.use("/shipping", shippingRouter);
 app.use("/alimentos", alimentoRouter); 
 app.use('/quiz', quizRouter);
 app.use('/quiz/plano', planoRouter);
-app.use('/historico-plano', myplanRouter);
+app.use('/api/dashboard/', myplanRouter);
 app.use(auth);
 
 // ROTAS PRIVADAS (Com Login)
