@@ -1,23 +1,23 @@
-// src/controller/MyPlan/MyPlanController.js
-
 import { prismaClient } from '../../../prisma/prisma.js';
 
 class MyPlanController {
-    constructor() {
-        // Se precisar de configurações iniciais, coloque aqui
-    }
+    constructor() {}
 
     // LISTAR HISTÓRICO
     async obterHistorico(req, res) {
         try {
-            const userId = req.user?.id;
+            // Tenta obter o ID de várias fontes possíveis para garantir compatibilidade
+            // req.auth é o padrão para express-jwt/novos middlewares
+            // req.user é comum em passport/middlewares antigos
+            const userId = req.auth?.userId || req.user?.userId || req.user?.id;
+
+            console.log("UserID recebido no controller:", userId); // Log para debug
 
             if (!userId) {
                 return res.status(401).json({ error: "Usuário não autenticado." });
             }
 
             // Busca planos ordenados por data (mais recente primeiro)
-            // EQUIVALENTE PRISMA: findMany com orderBy
             const historico = await prismaClient.respostaQuiz.findMany({
                 where: { 
                     usuarioId: parseInt(userId) 
@@ -38,14 +38,13 @@ class MyPlanController {
     // LIMPAR HISTÓRICO
     async limparHistorico(req, res) {
         try {
-            const userId = req.user?.id;
+            const userId = req.auth?.userId || req.user?.userId || req.user?.id;
 
             if (!userId) {
                 return res.status(401).json({ error: "Usuário não autenticado." });
             }
 
             // Deleta todos os planos daquele usuário
-            // EQUIVALENTE PRISMA: deleteMany
             await prismaClient.respostaQuiz.deleteMany({
                 where: { 
                     usuarioId: parseInt(userId) 
@@ -63,7 +62,7 @@ class MyPlanController {
     // DEFINIR PLANO ATIVO
     async definirPlanoAtivo(req, res) {
         try {
-            const userId = req.user?.id;
+            const userId = req.auth?.userId || req.user?.userId || req.user?.id;
             const { planoId } = req.body;
 
             if (!planoId || !userId) {
@@ -82,8 +81,7 @@ class MyPlanController {
                 return res.status(404).json({ error: 'Plano não encontrado ou não pertence a você.' });
             }
 
-            // Atualiza a data para agora, fazendo ele ser o "primeiro" na busca sorted
-            // EQUIVALENTE PRISMA: update
+            // Atualiza a data para agora, fazendo ele ser o "primeiro" na busca ordenada
             const planoAtualizado = await prismaClient.respostaQuiz.update({
                 where: { 
                     id: parseInt(planoId) 

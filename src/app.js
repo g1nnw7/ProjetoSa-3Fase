@@ -12,8 +12,8 @@ import alimentoRouter from "./routes/alimentos.js";
 import paymentRouter from "./routes/paymentRoutes.js";
 import orderRouter from './routes/orderRoutes.js';
 import planoRouter from './routes/planoRoutes.js';
-import myplanRouter from './routes/myplanRoutes.js';
 import quizRouter from './routes/quizRoutes.js';
+import myPlanRouter from './routes/myplanRoutes.js';
 
 export const app = express();
 
@@ -34,7 +34,7 @@ app.use(auth);
 // Rotas Privadas
 app.use('/quiz', quizRouter);
 app.use('/quiz/plano', planoRouter);
-app.use('/api/dashboard/', myplanRouter);
+app.use('/dashboard', myPlanRouter);
 app.use("/enderecos", addressRouter);
 app.use("/payment", paymentRouter);
 app.use("/orders", orderRouter);

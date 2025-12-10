@@ -1,16 +1,18 @@
 import { Router } from "express";
 import { myPlanController } from "../controller/MyPlan/MyplanController.js";
 
-const myplanRouter = Router();
 
-// /api/dashboard/myplan
-myplanRouter.get("/myplan", myPlanController.obterHistorico);
+const myPlanRouter = Router();
 
-// /api/dashboard/historico
-myplanRouter.delete("/historico", myPlanController.limparHistorico);
+// As rotas abaixo são prefixadas por "/dashboard" conforme definido no app.js
 
-// /api/dashboard/definir-ativo
-// define o plano atual, marca e coloca no topo
-myplanRouter.patch("/definir-ativo", myPlanController.definirPlanoAtivo);
+// Rota final: GET http://localhost:3000/dashboard/myplan
+myPlanRouter.get("/myplan", myPlanController.obterHistorico);
 
-export default myplanRouter;
+// Rota final: DELETE http://localhost:3000/dashboard/historico
+myPlanRouter.delete("/historico", myPlanController.limparHistorico);
+
+// Rota final: PATCH http://localhost:3000/dashboard/definir-ativo
+myPlanRouter.patch("/definir-ativo", myPlanController.definirPlanoAtivo);
+
+export default myPlanRouter;

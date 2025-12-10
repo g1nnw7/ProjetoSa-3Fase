@@ -5,7 +5,7 @@ import CartSidebar from '../Cart/CartSidebar';
 import { useAuth } from '../../contexts/AuthContext'; 
 import { toast } from 'react-toastify';
 
-
+// ... (Ícones mantidos iguais: ShoppingBagIcon, UserIcon, LogoutIcon, AdminIcon) ...
 function ShoppingBagIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -45,8 +45,8 @@ function Header({ openRegisterModal }) {
   const { totalItems } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  
   const isHome = location.pathname === '/';
-
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,7 +70,7 @@ function Header({ openRegisterModal }) {
   }
 
   const headerBackgroundClass = scrolled || !isHome
-    ? 'bg-white backdrop-blur-md' 
+    ? 'bg-white/90 backdrop-blur-md shadow-sm' 
     : 'bg-transparent'; 
 
   return (
@@ -120,6 +120,7 @@ function Header({ openRegisterModal }) {
                 <span className="text-[#6cc24a] font-semibold">{user.nome}</span>
               </span>
               
+              {/* ADMIN Dashboard: Apenas para role ADMIN */}
               {user.role === 'ADMIN' && (
                 <button
                   onClick={() => navigate('/admin')}
@@ -130,10 +131,12 @@ function Header({ openRegisterModal }) {
                 </button>
               )}
 
+              {/* USER Dashboard: Acessível por TODOS (Admin e User) */}
               <button
                 onClick={() => navigate('/dashboard')} 
                 className="relative p-2 bg-white hover:bg-gray-100 text-gray-600 hover:text-green-600 transition-colors rounded-full cursor-pointer shadow-sm border border-gray-200"
                 aria-label="Minha Conta"
+                title="Minha Conta"
               >
                 <UserIcon />
               </button>

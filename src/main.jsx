@@ -23,6 +23,7 @@ import Quiz from './pages/Quiz/Quiz.jsx'
 import Plano from './pages/Plano/Plano.jsx'
 import Myplan from './pages/MyPlan/MyPlan.jsx'
 import DevReceita from './pages/DevReceita/DevReceita.jsx'
+import PrivateRoute from './routes/PrivateRoute.jsx'
 
 const router = createBrowserRouter([
   {
@@ -53,12 +54,10 @@ const router = createBrowserRouter([
         path: "plano", 
         element: <Plano />,
       },
-      
       {
-        element: <ProtectedRoute />,
+        element: <PrivateRoute />,
         children: [
-
-          {
+         {
              path: "dashboard",
              children: [
                 { path: "", element: <DashboardPage /> }, 
@@ -67,6 +66,19 @@ const router = createBrowserRouter([
                 { path: "orders", element: <OrdersPage /> },
                  { path: "myplan", element: <Myplan /> }
              ]
+          }
+        ]
+      },
+      {
+        element: <ProtectedRoute />,
+        children: [
+          
+          {
+            path: "admin", 
+            element: <AdminRoute />, 
+            children: [
+              { path: "", element: <AdminDashboard /> } 
+            ]
           },
           {
             path: "checkout",
@@ -74,13 +86,6 @@ const router = createBrowserRouter([
           }
         ]
       }, 
-      {
-        path: "admin", 
-        element: <AdminRoute />, 
-        children: [
-          { path: "", element: <AdminDashboard /> } 
-        ]
-      }
     ]
   },
   {

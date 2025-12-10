@@ -21,15 +21,23 @@ function Myplan() {
     carregarDados();
   }, [user, navigate]);
 
+  const getToken = () => {
+    // Seu localStorage mostra que a chave correta é 'accessToken'
+    return localStorage.getItem('accessToken');
+  };
+
   const carregarDados = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('accessToken');
+      const token = getToken();
       
       if (!token) throw new Error('Sem token');
 
-      // Busca do Backend (Fonte da Verdade)
-      const response = await axios.get('http://localhost:3000/api/dashboard/myplan', {
+      // CORREÇÃO IMPORTANTE NA URL: 
+      // O app.js define: app.use('/dashboard', myplanRouter);
+      // O router define: router.get('/myplan', ...);
+      // Logo, a URL final é: /dashboard/myplan (sem /api)
+      const response = await axios.get('http://localhost:3000/dashboard/myplan', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       
@@ -37,7 +45,6 @@ function Myplan() {
       
       if (planos.length > 0) {
         setHistoricoPlanos(planos);
-        // Assume que o primeiro (index 0) é o ativo pois o backend ordena por data
         setPlanoAtual(planos[0]); 
       } else {
         setHistoricoPlanos([]);
@@ -45,51 +52,57 @@ function Myplan() {
       }
 
     } catch (error) {
-      console.error('Erro ao carregar:', error);
-      toast.error('Erro ao carregar seus dados.');
+      console.error('Erro ao carregar MyPlan:', error);
+      
+      if (error.response && error.response.status === 401) {
+        toast.error('Sessão expirada. Faça login novamente.');
+        navigate('/login');
+        return;
+      }
+      
+      if (error.message !== 'Sem token') {
+          // Não mostramos erro se for só lista vazia ou erro de rede pontual
+          console.log("Falha ao buscar planos.");
+      }
     } finally {
       setLoading(false);
     }
   };
 
-  // --- FUNÇÃO: CHAMADA AO CONTROLLER (DEFINIR ATIVO) ---
   const handleDefinirAtivo = async (planoId) => {
     try {
-      const token = localStorage.getItem('accessToken');
-      
-      await axios.patch('http://localhost:3000/api/dashboard/definir-ativo', 
+      const token = getToken();
+      // URL Corrigida: /dashboard/definir-ativo
+      await axios.patch('http://localhost:3000/dashboard/definir-ativo', 
         { planoId },
         { headers: { 'Authorization': `Bearer ${token}` } }
       );
 
       toast.success('Plano atualizado!');
-      carregarDados(); // Recarrega a lista para refletir a nova ordem
+      carregarDados(); 
     } catch (error) {
       console.error(error);
       toast.error('Erro ao atualizar plano');
     }
   };
 
-  // --- FUNÇÃO: CHAMADA AO CONTROLLER (LIMPAR HISTÓRICO) ---
   const handleLimparHistorico = async () => {
     try {
-      const token = localStorage.getItem('accessToken');
-      
-      await axios.delete('http://localhost:3000/api/dashboard/historico', {
+      const token = getToken();
+      // URL Corrigida: /dashboard/historico
+      await axios.delete('http://localhost:3000/dashboard/historico', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
 
-      // Limpa estado local e localStorage
       setHistoricoPlanos([]);
       setPlanoAtual(null);
       localStorage.removeItem('historicoPlanos'); 
       localStorage.removeItem('planoAtual');
-      
       setModalAberto(false);
-      toast.success('Histórico apagado do servidor!');
+      toast.success('Histórico apagado!');
     } catch (error) {
       console.error(error);
-      toast.error('Erro ao limpar histórico no servidor');
+      toast.error('Erro ao limpar histórico');
     }
   };
 
@@ -113,9 +126,8 @@ function Myplan() {
     return (
       <div className="space-y-4 max-h-96 overflow-y-auto pr-2 custom-scrollbar">
         {historicoPlanos.map((plano, index) => {
-          // Normaliza os dados (caso venha do Mongo ou estrutura antiga)
           const dados = plano.planoGerado || plano; 
-          const isAtual = index === 0; // O primeiro da lista é o atual
+          const isAtual = index === 0; 
 
           return (
             <div key={plano._id || index} className={`rounded-lg border p-4 transition ${isAtual ? 'border-green-500 bg-green-50 shadow-sm' : 'bg-white border-gray-200 hover:shadow-md'}`}>
@@ -169,7 +181,7 @@ function Myplan() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-b from-green-50 to-green-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100 flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
           <p className="mt-4 text-gray-600 font-medium">Sincronizando seus dados...</p>
@@ -178,14 +190,13 @@ function Myplan() {
     );
   }
 
-  // Preparar dados para exibição nos cards de estatística
   const dadosPlanoAtual = planoAtual?.planoGerado || planoAtual;
   const diasAtivos = planoAtual 
     ? Math.floor((new Date() - new Date(planoAtual.dataCriacao || Date.now())) / (1000 * 60 * 60 * 24)) 
     : 0;
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-green-50 to-green-100 p-4 md:p-6">
+    <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100 p-4 md:p-6">
       <div className="max-w-6xl mx-auto">
         
         {/* Cabeçalho */}
