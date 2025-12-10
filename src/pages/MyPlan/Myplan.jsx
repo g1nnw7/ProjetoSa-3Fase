@@ -22,23 +22,16 @@ function Myplan() {
   }, [user, navigate]);
 
   const carregarDados = async () => {
-    try {
-     setLoading(true);
-      
-      // 1. Pega do localStorage
-      let token = localStorage.getItem('accessToken');
-      
-      if (!token) throw new Error('Sem token');
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('accessToken');
+      
+      if (!token) throw new Error('Sem token');
 
-      // --- CORREÇÃO AQUI ---
-      // Remove todas as aspas duplas (") que estiverem sobrando
-      token = token.replace(/"/g, ''); 
-      // ---------------------
-
-      // Busca do Backend
-      const response = await axios.get('http://localhost:3000/api/dashboard/myplan', {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
+      // Busca do Backend (Fonte da Verdade)
+      const response = await axios.get('http://localhost:3000/api/dashboard/myplan', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       
       const planos = response.data || [];
       

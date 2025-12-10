@@ -19,19 +19,24 @@ export const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+// Rotas Publícas
 app.use("/auth", authRouter);
-app.use(productRouter);  
+app.use(usuarioRouter); // <--- COLOCAR AQUI (Antes do auth) para permitir cadastro
+app.use(productRouter); 
 app.use(categoryRouter); 
 app.use("/shipping", shippingRouter); 
 app.use("/alimentos", alimentoRouter); 
+
+// Middleware
+app.use(auth); 
+
+// Rotas Privadas
 app.use('/quiz', quizRouter);
 app.use('/quiz/plano', planoRouter);
 app.use('/api/dashboard/', myplanRouter);
-app.use(auth);
-
-// ROTAS PRIVADAS (Com Login)
-
-app.use(usuarioRouter); 
 app.use("/enderecos", addressRouter);
 app.use("/payment", paymentRouter);
 app.use("/orders", orderRouter);
+
+export default app;
